@@ -144,8 +144,6 @@ Tuack-NG 开发时的第一个目标便是辅助题目相关的所有环节。
 
 == 题面 - 语法
 
-// #end-slide(title: [Thank You!])
-
 Tuack-NG 使用 Markdown 编写题面，并且支持*所有 CNOI 语法*。
 
 #table(
@@ -190,8 +188,7 @@ Tuack-NG 使用 Markdown 编写题面，并且支持*所有 CNOI 语法*。
   )
 }
 
-
-// ---------------------------------------------------------------- 处理题面 - 模板系统
+// ---------------------------------------------------------------- 题面 - 语法 - 模板系统
 // 左 = statement.md 原文，右 = 同一段展开之后；一对「模板 ↔ 展开」一种颜色
 #let MCODE = 9pt
 #let MLH = 10pt
@@ -210,18 +207,21 @@ Tuack-NG 使用 Markdown 编写题面，并且支持*所有 CNOI 语法*。
 #let m5 = rgb("#c3aaf0") // sample.text
 #let m6 = rgb("#7fd4cf") // sample.file
 
-#let mrow(body, lh: MLH) = box(height: lh, align(left + horizon, body))
-#let mcol(items, size: MCODE, lh: MLH) = block(
+// 代码面板外观（模板系统 / 外置表格 / Markdown 导出共用）
+#let panel(body, inset: (x: 10pt, y: 4pt)) = block(
   fill: skyll,
-  inset: (x: 10pt, y: 4pt),
+  inset: inset,
   radius: 3pt,
   width: 100%,
-  {
-    set text(size: size)
-    set par(leading: 0pt)
-    items.map(i => mrow(i, lh: lh)).join(linebreak())
-  },
+  body,
 )
+
+#let mrow(body, lh: MLH) = box(height: lh, align(left + horizon, body))
+#let mcol(items, size: MCODE, lh: MLH) = panel({
+  set text(size: size)
+  set par(leading: 0pt)
+  items.map(i => mrow(i, lh: lh)).join(linebreak())
+})
 
 #let m-left = (
   mono("## 输入格式"),
@@ -239,19 +239,8 @@ Tuack-NG 使用 Markdown 编写题面，并且支持*所有 CNOI 语法*。
   band(m4, "{{ s.output_file() }}"),
   [],
   band(m5, "{{ sample.text(1) }}"),
-  // 右侧这一格展开成 12 行，这里补 11 行空行，下面才继续逐行对齐
-  [],
-  [],
-  [],
-  [],
-  [],
-  [],
-  [],
-  [],
-  [],
-  [],
-  [],
-  [],
+  // 右侧这一格展开成 12 行，这里补 12 行空行，下面才继续逐行对齐
+  ..range(12).map(_ => []),
   mono("## 样例 2"),
   [],
   band(m6, "{{ sample.file(2) }}"),
@@ -315,13 +304,8 @@ Tuack-NG 还支持更强大的*模板系统*。
   )
 }
 
-// ---------------------------------------------------------------- 处理题面 - 表格 / 外置表格
-#let cblock(lines, size: 13pt, lang: none, leading: 0.3em, hl: -1, note: none) = block(
-  fill: skyll,
-  inset: (x: 10pt, y: 7pt),
-  radius: 3pt,
-  width: 100%,
-  {
+// ---------------------------------------------------------------- 题面 - 语法 - 外置表格
+#let cblock(lines, size: 13pt, lang: none, leading: 0.3em, hl: -1, note: none) = panel(inset: (x: 10pt, y: 7pt), {
     set text(font: "Maple Mono Normal NL NF", size: size)
     set par(leading: leading, justify: false)
     let body = lines
@@ -342,8 +326,7 @@ Tuack-NG 还支持更强大的*模板系统*。
         body, raw(note, lang: lang),
       )
     }
-  },
-)
+})
 
 #let tbl-jinja = (
   "| 测试点编号 | $T =$ | $N \\le$ | $\\lvert a_i \\rvert \\le$ |",
@@ -420,67 +403,58 @@ Tuack-NG 支持多种渲染目标，包括但不限于 (C)NOI、CCPC 与 Markdow
 
 ---
 
-#let MD = 8.5pt
-#let MDLH = 12pt
-#let b(c, s) = band(c, s, size: MD, lh: MDLH)
-#let t(s) = mono(s, size: MD)
+#let MD-CODE = 8.5pt
+#let MD-LH = 12pt
+#let md-hi(c, s) = band(c, s, size: MD-CODE, lh: MD-LH)
+#let md-tx(s) = mono(s, size: MD-CODE)
+
+// 三份导出共有的开头：两个标题各带一行正文（H 为标题层级）
+#let md-head(H) = (
+  md-hi(m1, H + " 输入格式"),
+  md-tx(""),
+  md-tx("第一行一个整数 $n$。"),
+  md-tx(""),
+  md-hi(m1, H + " 输出格式"),
+  md-tx(""),
+  md-tx("一行一个整数。"),
+  md-tx(""),
+)
 
 #let md-plain = (
-  b(m1, "## 输入格式"),
-  t(""),
-  t("第一行一个整数 $n$。"),
-  t(""),
-  b(m1, "## 输出格式"),
-  t(""),
-  t("一行一个整数。"),
-  t(""),
-  b(m2, "| 测试点 | $n \\le$ |"),
-  b(m2, "| :----: | ------: |"),
-  b(m2, "|  $1$   |    $10$ |"),
-  b(m2, "|  $2$   |       ^ |"),
+  ..md-head("##"),
+  md-hi(m2, "| 测试点 | $n \\le$ |"),
+  md-hi(m2, "| :----: | ------: |"),
+  md-hi(m2, "|  $1$   |    $10$ |"),
+  md-hi(m2, "|  $2$   |       ^ |"),
 )
 
 #let md-loj = (
-  b(m1, "## 输入格式"),
-  t(""),
-  t("第一行一个整数 $n$。"),
-  t(""),
-  b(m1, "## 输出格式"),
-  t(""),
-  t("一行一个整数。"),
-  t(""),
-  b(m2, "| 测试点<!--row:0,col: 0--> | $n \\le$<!--row:0,col: 1--> |"),
-  b(m2, "| :-----------------------: | -------------------------: |"),
-  b(m2, "|  $1$<!--row:1,col: 0-->   |    $10$<!--row:1,col: 1--> |"),
-  b(m2, "|  $2$<!--row:2,col: 0-->   |    $10$<!--row:1,col: 1--> |"),
+  ..md-head("##"),
+  md-hi(m2, "| 测试点<!--row:0,col: 0--> | $n \\le$<!--row:0,col: 1--> |"),
+  md-hi(m2, "| :-----------------------: | -------------------------: |"),
+  md-hi(m2, "|  $1$<!--row:1,col: 0-->   |    $10$<!--row:1,col: 1--> |"),
+  md-hi(m2, "|  $2$<!--row:2,col: 0-->   |    $10$<!--row:1,col: 1--> |"),
 )
 
 #let md-uoj = (
-  b(m1, "### 输入格式"),
-  t(""),
-  t("第一行一个整数 $n$。"),
-  t(""),
-  b(m1, "### 输出格式"),
-  t(""),
-  t("一行一个整数。"),
-  t(""),
-  b(m2, "<table>"),
-  b(m2, "  <thead>"),
-  b(m2, "    <tr>"),
-  b(m2, "      <th align=\"center\"> 测试点 </th>"),
-  b(m2, "      <th align=\"right\"> $n \\le$ </th>"),
-  b(m2, "    </tr>"),
-  b(m2, "  </thead>"),
-  b(m2, "  <tbody>"),
-  b(m2, "    <tr>"),
-  b(m2, "      <td align=\"center\"> $1$ </td>"),
-  b(m2, "      <td rowspan=\"2\" align=\"right\"> $10$ </td>"),
-  b(m2, "    </tr>"),
-  b(m2, "    <tr>"),
-  b(m2, "      <td align=\"center\"> $2$ </td>"),
-  b(m2, "    </tr>"),
-  b(m2, "  </tbody>"),
-  b(m2, "</table>"),
+  ..md-head("###"),
+  md-hi(m2, "<table>"),
+  md-hi(m2, "  <thead>"),
+  md-hi(m2, "    <tr>"),
+  md-hi(m2, "      <th align=\"center\"> 测试点 </th>"),
+  md-hi(m2, "      <th align=\"right\"> $n \\le$ </th>"),
+  md-hi(m2, "    </tr>"),
+  md-hi(m2, "  </thead>"),
+  md-hi(m2, "  <tbody>"),
+  md-hi(m2, "    <tr>"),
+  md-hi(m2, "      <td align=\"center\"> $1$ </td>"),
+  md-hi(m2, "      <td rowspan=\"2\" align=\"right\"> $10$ </td>"),
+  md-hi(m2, "    </tr>"),
+  md-hi(m2, "    <tr>"),
+  md-hi(m2, "      <td align=\"center\"> $2$ </td>"),
+  md-hi(m2, "    </tr>"),
+  md-hi(m2, "  </tbody>"),
+  md-hi(m2, "</table>"),
 )
 
 Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标题层级，表格等。
@@ -494,16 +468,16 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
   [
     #align(center)[#text(size: 16pt)[Markdown]]
     #v(-12pt)
-    #mcol(md-plain, size: MD, lh: MDLH)
+    #mcol(md-plain, size: MD-CODE, lh: MD-LH)
   ],
   [
     #align(center)[#text(size: 16pt)[LOJ]]
     #v(-12pt)
-    #mcol(md-loj, size: MD, lh: MDLH)
+    #mcol(md-loj, size: MD-CODE, lh: MD-LH)
   ],
   [
     #align(center)[#text(size: 16pt)[UOJ]]
     #v(-12pt)
-    #mcol(md-uoj, size: MD, lh: MDLH)
+    #mcol(md-uoj, size: MD-CODE, lh: MD-LH)
   ],
 )
