@@ -1,0 +1,13 @@
+# Typst 编译产物（由 main.typ 生成）
+/main.pdf
+
+# 排版草稿（过程中的 typ / png）
+/preview/
+
+# 临时工程（渲染试验用）
+.tmp*/
+
+# 编辑器 / 系统
+.DS_Store
+*.swp
+.vscode/
