@@ -627,3 +627,82 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
 #line(length: 100%, stroke: gray)
 
 同样的 `args` 加同样的 `seed`，*换时间、换机器，出来的还是同一份数据*；
+
+== 数据与测试 - 测试
+
+想卡掉的错解，赛时才发现 AC 了？
+
+在筹备阶段，把「它该得几分」提前写进配置，Tuack-NG 会帮你检查它在数据上的运行结果是否符合你的预期。
+
+#grid(
+  columns: (1.15fr, 1fr),
+  column-gutter: 20pt,
+  align: top,
+  [
+    #code(size: 16pt)[
+      ```json
+      "tests": {
+        "std": {
+          "expected": "== 100",
+          "path": "tests/std.cpp"
+        },
+        "tests/b.cpp": {
+          "expected": [">= 10", "<= 60"],
+          "path": "tests/b.cpp"
+        }
+      }
+      ```
+    ]
+  ],
+  [
+    #set align(horizon)
+
+    期望分数写成表达式（`== 100`、`>= 10`），也可以给区间，满足各种需求。
+
+    支持子任务（捆绑测试）与 SPJ。
+  ],
+)
+
+
+== 数据与测试 - 校验
+
+零分之一、树上造了个环？小数据可以自己盯，但动辄数 MB 的大数据怎么看？
+
+让我们写个 Validator 让程序去看。
+
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 20pt,
+  align: top,
+  [
+    #code(size: 16pt)[
+      ```cpp
+      // val/val.cpp
+      #include "testlib.h"
+
+      int main(int argc, char* argv[]) {
+        registerValidation(argc, argv);
+
+        int n = inf.readInt(1, 100000, "n");
+        inf.readEoln();
+        inf.readEof();
+        return 0;
+      }
+      ```
+    ]
+  ],
+  [
+    #code(size: 16pt)[
+      ```json
+      "validator": {
+        "data": {
+          "source": "val/val.cpp",
+          "deps": ["val/testlib.h"]
+        }
+      }
+      ```
+    ]
+    同时，我们支持在生成数据时顺手校验，从源头解决问题。
+  ],
+)
+#text(fill: gray)[碎碎念：Testlib 不支持在 Validator 里使用 `opt` 接收参数，TAT……]
