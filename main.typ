@@ -706,3 +706,72 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
   ],
 )
 #text(fill: gray)[碎碎念：Testlib 不支持在 Validator 里使用 `opt` 接收参数，TAT……]
+
+== 导出
+
+Lemon 一套、Arbiter 一套，CCR 一套……BOOM，换个评测平台就得把数据重新手配一遍。
+
+#v(4pt)
+
+Tuack-NG 帮你导出到评测平台。
+
+#v(6pt)
+#grid(
+  columns: (1fr, 1fr, 1fr),
+  column-gutter: 18pt,
+  align: top,
+  [
+    #align(center)[Lemon]
+
+    #code(size: 12pt)[
+      ```txt
+      lemon/
+      └── data/
+          └── aplusb/
+              ├── aplusb1.in
+              ├── aplusb1.ans
+              ├── aplusb2.in
+              ├── aplusb2.ans
+              └── ...
+      ```
+    ]
+  ],
+  [
+    #align(center)[Arbiter]
+
+    #code(size: 12pt)[
+      ```txt
+      arbiter/main/
+      ├── setup.cfg
+      ├── team.info
+      ├── day<N>.info
+      ├── task<N>_<M>.info
+      ├── data/
+      ├── evaldata/
+      ├── final/
+      ├── players/
+      ├── result/
+      ├── filter/
+      ├── tmp/
+      └── down/
+      ```
+    ]
+  ],
+  [
+    #align(center)[CCR-Plus]
+
+    #code(size: 12pt)[
+      ```txt
+      ccr-plus/
+      ├── .ccr
+      ├── data/aplusb/
+      │   ├── .prb
+      │   ├── 1.in
+      │   ├── 1.ans
+      │   └── <SPJ>
+      ├── src/
+      └── result/
+      ```
+    ]
+  ],
+)
