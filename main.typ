@@ -15,7 +15,7 @@
     date: datetime.today(),
     // institution: "LCA 营（MS Attached to NWPU）",
   ),
-  config-common(show-notes-on-second-screen: right),
+  // config-common(show-notes-on-second-screen: right),
 )
 
 #set align(horizon)
@@ -306,26 +306,26 @@ Tuack-NG 还支持更强大的*模板系统*。
 
 // ---------------------------------------------------------------- 题面 - 语法 - 外置表格
 #let cblock(lines, size: 13pt, lang: none, leading: 0.3em, hl: -1, note: none) = panel(inset: (x: 10pt, y: 7pt), {
-    set text(font: "Maple Mono Normal NL NF", size: size)
-    set par(leading: leading, justify: false)
-    let body = lines
-      .enumerate()
-      .map(((i, l)) => {
-        let r = raw(l, lang: lang)
-        if i == hl { highlight(fill: rgb("#ffe08a"), extent: 3pt, radius: 2pt, r) } else { r }
-      })
-      .join(linebreak())
-    if note == none {
-      body
-    } else {
-      // 备注放整个代码块的右下角
-      grid(
-        columns: (1fr, auto),
-        column-gutter: 10pt,
-        align: (left + bottom, right + bottom),
-        body, raw(note, lang: lang),
-      )
-    }
+  set text(font: "Maple Mono Normal NL NF", size: size)
+  set par(leading: leading, justify: false)
+  let body = lines
+    .enumerate()
+    .map(((i, l)) => {
+      let r = raw(l, lang: lang)
+      if i == hl { highlight(fill: rgb("#ffe08a"), extent: 3pt, radius: 2pt, r) } else { r }
+    })
+    .join(linebreak())
+  if note == none {
+    body
+  } else {
+    // 备注放整个代码块的右下角
+    grid(
+      columns: (1fr, auto),
+      column-gutter: 10pt,
+      align: (left + bottom, right + bottom),
+      body, raw(note, lang: lang),
+    )
+  }
 })
 
 #let tbl-jinja = (
@@ -479,5 +479,68 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
     #align(center)[#text(size: 16pt)[UOJ]]
     #v(-12pt)
     #mcol(md-uoj, size: MD-CODE, lh: MD-LH)
+  ],
+)
+
+== 数据与测试
+
+#v(4pt)
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 20pt,
+  align: top,
+  [
+    很多人是这么造数据的：
+    #v(4pt)
+    #cblock(
+      (
+        "#include <bits/stdc++.h>",
+        "using namespace std;",
+        "",
+        "const int N = 10;",
+        "const int M = 20;",
+        "",
+        "int main() {",
+        "    freopen(\"x.in\", \"w\", stdout);",
+        "    srand(time(0));",
+        "    int n = rand() % N + 1;",
+        "    int m = rand() % M + 1;",
+        "    printf(\"%d %d\\n\", n, m);",
+        "    // ...",
+        "}",
+      ),
+      size: 12pt,
+      lang: "cpp",
+    )
+    #v(6pt)
+    但参数和文件名写死在源码里，每跑一次就得改一次。
+  ],
+  [
+    聪明些的写法：
+    #v(4pt)
+    #cblock(
+      (
+        "#include <bits/stdc++.h>",
+        "using namespace std;",
+        "",
+        "const int T = 6;",
+        "int N[] = { 1, 2, 2, 10, 100, 100000 };",
+        "long long M[] = { 10, 20, 20, 100, 1000,",
+        "                  1000000000000000000LL };",
+        "",
+        "int main() {",
+        "    srand(time(0));",
+        "    for (int i = 0; i < T; ++i) {",
+        "        freopen((to_string(i + 1) + \".in\").c_str(),",
+        "                \"w\", stdout);",
+        "        // ...",
+        "    }",
+        "}",
+      ),
+      size: 12pt,
+      lang: "cpp",
+    )
+    #v(6pt)
+    但*不可复现*：种子是 `time(0)`；就算种子固定，*改一个也得全部重造*——数组里插一个点，它后面所有点的随机序列都跟着变了。
   ],
 )
