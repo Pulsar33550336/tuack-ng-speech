@@ -216,6 +216,10 @@ Tuack-NG 使用 Markdown 编写题面，并且支持*所有 CNOI 语法*。
   body,
 )
 
+// 代码面板：统一走主题的 block raw。
+// 主题把它压到 0.9em，所以这里按「实际字号」书写，由 helper 换算。
+#let code(body, size: 11pt) = text(size: size / 0.9, body)
+
 #let mrow(body, lh: MLH) = box(height: lh, align(left + horizon, body))
 #let mcol(items, size: MCODE, lh: MLH) = panel({
   set text(size: size)
@@ -340,30 +344,6 @@ Tuack-NG 还支持更强大的*模板系统*。
 )
 
 // 拿出来写：tables/1.lua（导数之殇的真实文件）
-#let tbl-lua = (
-  "local il = tng.tools.inline_latex",
-  "",
-  "return tng.table {",
-  "    headers = { \"测试点编号\", il(\"T =\"), il(\"N \\\\le\"), il(\"\\\\lvert a_i \\\\rvert \\\\le\") },",
-  "    align = { \"center\", \"center\", \"center\", \"center\" },",
-  "",
-  "    data = tng.config.data_cases:map(function(group)",
-  "        local args = group.args",
-  "        return {",
-  "            tng.tools.cases(group.id),",
-  "            tng.tools.inline_latex(args.T),",
-  "            tng.tools.inline_latex(args.max_n),",
-  "            tng.tools.inline_latex(args.max_a)",
-  "        }",
-  "    end),",
-  "",
-  "    merge_rules = {",
-  "        { col = 2, merge_row = true },",
-  "        { col = 3, merge_row = true },",
-  "        { col = 4, merge_row = true },",
-  "    },",
-  "}",
-)
 
 == 题面 - 语法 - 外置表格
 
@@ -377,7 +357,32 @@ Tuack-NG 还支持更强大的*模板系统*。
 同一张表，换成一个 Lua 文件。
 
 #v(4pt)
-#cblock(tbl-lua, lang: "lua")
+#code(size: 12.5pt)[
+  ```lua
+  local il = tng.tools.inline_latex
+
+  return tng.table {
+      headers = { "测试点编号", il("T ="), il("N \\le"), il("\\lvert a_i \\rvert \\le") },
+      align = { "center", "center", "center", "center" },
+
+      data = tng.config.data_cases:map(function(group)
+          local args = group.args
+          return {
+              tng.tools.cases(group.id),
+              tng.tools.inline_latex(args.T),
+              tng.tools.inline_latex(args.max_n),
+              tng.tools.inline_latex(args.max_a)
+          }
+      end),
+
+      merge_rules = {
+          { col = 2, merge_row = true },
+          { col = 3, merge_row = true },
+          { col = 4, merge_row = true },
+      },
+  }
+  ```
+]
 
 == 题面 - 渲染
 
@@ -486,61 +491,139 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
 
 #v(4pt)
 #grid(
-  columns: (1fr, 1fr),
+  columns: (0.6fr, 1fr),
   column-gutter: 20pt,
   align: top,
   [
     很多人是这么造数据的：
-    #v(4pt)
-    #cblock(
-      (
-        "#include <bits/stdc++.h>",
-        "using namespace std;",
-        "",
-        "const int N = 10;",
-        "const int M = 20;",
-        "",
-        "int main() {",
-        "    freopen(\"x.in\", \"w\", stdout);",
-        "    srand(time(0));",
-        "    int n = rand() % N + 1;",
-        "    int m = rand() % M + 1;",
-        "    printf(\"%d %d\\n\", n, m);",
-        "    // ...",
-        "}",
-      ),
-      size: 12pt,
-      lang: "cpp",
-    )
-    #v(6pt)
+    #code(size: 14pt)[
+      ```cpp
+      #include <bits/stdc++.h>
+      using namespace std;
+
+      const int N = 10;
+      const int M = 20;
+
+      int main() {
+          freopen("x.in", "w", stdout);
+          srand(time(0));
+          int n = rand() % N + 1;
+          int m = rand() % M + 1;
+          printf("%d %d\n", n, m);
+          // ...
+      }
+      ```
+    ]
     但参数和文件名写死在源码里，每跑一次就得改一次。
   ],
   [
     聪明些的写法：
-    #v(4pt)
-    #cblock(
-      (
-        "#include <bits/stdc++.h>",
-        "using namespace std;",
-        "",
-        "const int T = 6;",
-        "int N[] = { 1, 2, 2, 10, 100, 100000 };",
-        "long long M[] = { 10, 20, 20, 100, 1000,",
-        "                  1000000000000000000LL };",
-        "",
-        "int main() {",
-        "    srand(time(0));",
-        "    for (int i = 0; i < T; ++i) {",
-        "        freopen((to_string(i + 1) + \".in\").c_str(),",
-        "                \"w\", stdout);",
-        "        // ...",
-        "    }",
-        "}",
-      ),
-      size: 12pt,
-      lang: "cpp",
-    )
-    #v(6pt)
+    #code(size: 14pt)[
+      ```cpp
+      #include <bits/stdc++.h>
+      using namespace std;
+      const int T = 6;
+      int N[] = { 1, 2, 2, 10, 100, 100000 };
+      long long M[] = { 10, 20, 20, 100, 1000, 1000000000000000000LL };
+
+      int main() {
+          srand(time(0));
+          for (int i = 0; i < T; ++i) {
+              freopen((to_string(i + 1) + ".in").c_str(),
+                      "w", stdout);
+              // ...
+          }
+      }
+      ```
+    ]
     但*不可复现*：种子是 `time(0)`；就算种子固定，*改一个也得全部重造*——数组里插一个点，它后面所有点的随机序列都跟着变了。
   ],
 )
+
+== 数据与测试 - 生成器
+
+与 Tuack-NG 集成时，生成器里不需要文件名、不需要「第几个测试点」、也不需要种子——只剩「把参数变成数据」这一件事。
+
+#grid(
+  columns: (0.75fr, 1fr),
+  column-gutter: 20pt,
+  align: top,
+  [
+    #code(size: 14pt)[
+      ```cpp
+      #include "testlib.h"
+
+      int main(int argc, char* argv[]) {
+          registerGen(argc, argv, 1);
+
+          // 格式: n=... m=... seed=...
+          int n = opt<int>("n", 5);
+          long long m = opt<long long>("m", 20);
+          long long seed =
+              opt<unsigned long long>("seed", 0);
+
+          rnd.setSeed(seed);
+
+          cout << n << " " << m << endl;
+          // ...
+      }
+      ```
+    ]
+  ],
+  [
+    参数从配置里来：
+    #v(-8pt)
+    #code(size: 14pt)[
+      ```json
+      "args": { "n": 100000, "m": 1000000000000000000 },
+      "data": [
+        {
+          "id": [2,3], "score": 10,
+          "args": { "n": 2, "m": 20 }
+        },
+        {
+          "id": [19,20], "score": 10,
+          "args": { "n": 100000, "m": 1000000000000000000 }
+        },
+      ]
+      ```
+    ]
+    #v(-8pt)
+    然后，生成器会被传入 `-n=2 -m=20 -seed=<...>`。
+  ],
+)
+
+你只需要接收参数，将生成的数据打印到标准输出，剩下的全归 Tuack-NG 管。
+
+== 数据与测试 - 生成器 - 种子
+
+随机数种子不用你操心：Tuack-NG 给*每个测试点*生成一份，记在 `data/.seed` 里。
+
+#v(6pt)
+#grid(
+  columns: (1fr, 1.15fr),
+  column-gutter: 20pt,
+  align: top,
+  [
+    #code(size: 16pt)[
+      ```json
+      {
+        "1": 12093443819787335159,
+        "2": 12011163482082634790,
+        "3": 13007200171360182696,
+        // ...
+        "20": 8648298818406258413
+      }
+      ```
+    ]
+  ],
+  [
+    #set align(horizon)
+    Tuack-NG 也提供了操控种子重新生成的方法；
+    生成器那边只需要一行 `rnd.setSeed(seed)`，而种子由 Tuack-NG 传进来。
+  ],
+)
+
+#line(length: 100%, stroke: gray)
+
+同样的 `args` 加同样的 `seed`，*换时间、换机器，出来的还是同一份数据*；
