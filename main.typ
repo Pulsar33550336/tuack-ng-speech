@@ -775,3 +775,44 @@ Tuack-NG 帮你导出到评测平台。
     ]
   ],
 )
+
+== 小功能
+
+#grid(
+  columns: (1.3fr, 1fr),
+  column-gutter: 24pt,
+  align: top,
+  [
+    #text(size: 18pt, weight: "bold")[题面查错：`doc check` / `doc format`]
+    #v(6pt)
+    #text(size: 16pt)[
+      #table(
+        columns: (auto, auto, auto),
+        stroke: none,
+        inset: (x: 10pt, y: 4pt),
+        table.header([改前], [], [改后]),
+        [`小X开了一家糖果店`], [->], [`小 X 开了一家糖果店`],
+        [`中文:英文`], [->], [`中文：英文`],
+        [`ＡＢＣ１２３`], [->], [`ABC123`],
+        [`价格是$x$元`], [->], [`价格是 $x$ 元`],
+      )
+    ]
+    #v(8pt)
+    检查题面里不符合规范的地方，能修的就顺手修掉。
+  ],
+  [
+    #text(size: 18pt, weight: "bold")[批量改配置：`conf`]
+    #v(6pt)
+    #code(size: 14pt)[
+      ```txt
+      tuack-ng conf title "2025 模拟赛"
+      tuack-ng conf time 2.0
+      tuack-ng conf length 5h
+      tuack-ng conf conf <字段> <值>
+      tuack-ng conf migrate
+      ```
+    ]
+    #v(8pt)
+    在比赛日或比赛层级执行，一次改掉下面所有题目。
+  ],
+)
