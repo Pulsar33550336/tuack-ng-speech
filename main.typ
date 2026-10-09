@@ -502,17 +502,53 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
 
 == 前后端分离
 
-前端只负责内容，后端只负责长什么样。两边靠一份不可变的文档交接。
+这里的「前端／后端」不是 Web 那套。前端是*命令行与交互*，后端是*纯业务逻辑库*。
 
 #v(2pt)
-#include("assets/开发细节/前后端分离/separation.typ")
+#include("assets/开发细节/前后端分离/layers.typ")
 
-#v(2pt)
-三条纪律都写在类型里：*不可变、可序列化*（所以跨得过 WASM 边界）；资源经 `AssetProvider` 注入（后端不碰文件系统）；后端*不写最终输出目录*（宿主统一落盘）。
+#v(8pt)
+后端不知道自己在哪个项目里，也不知道产物要写到哪儿——它只认数据与 trait。
 
 ---
 
-交接的那份文档长这样。注意 `Problem` 里那一项：题面在交出去之前，已经是解析好的树，不是文本。
+== 前后端分离 - 纪律
+
+分离不靠自觉，靠几条硬规矩：
+
+- 后端不碰 `gctx()`、`std::fs` 和配置类型：没有全局状态，也不自己读写文件
+- 后端*全同步*：没有 async trait、不依赖 tokio；全项目唯一的异步点是 TLE/MLE 监控
+- `tuack-utils` 不依赖前端：要说给用户的话是 `Vec<String>`、要落盘的文件是 `Vec<RuleFile>`，交出去由前端显示和写盘
+- 后端注释里*不许*写「由前端实现」——契约只描述数据与约束，不描述消费者
+- 契约（`tuack-lib`）与实现（`tuack-utils`）分离，于是同一组 trait 也能由 WASM 插件实现
+
+---
+
+== 前后端分离 - 一个例子
+
+#grid(
+  columns: (1.5fr, 1fr),
+  column-gutter: 18pt,
+  align: top,
+  [
+    #code(raw(read("assets/开发细节/前后端分离/judge.rs"), lang: "rust", block: true), size: 11pt)
+  ],
+  [
+    后端只会回答「*这一个测试点*得几分」，连失败都当数据返回；它不知道子任务和总分是什么。
+
+    #v(6pt)
+    怎么合成总分、按什么分组，全在前端——策略取自配置，两个实现：正式数据按 `runtime.subtasks` 分组，样例固定一组。
+
+    #v(6pt)
+    所以换计分模型不用碰后端。
+  ],
+)
+
+---
+
+== 前后端分离 - 契约
+
+造数据、判题之外，渲染与导出也是同一套分法。交接的那份文档长这样——注意 `Problem` 里那一项。
 
 #grid(
   columns: (1fr, 1fr),
@@ -520,11 +556,13 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   align: top,
   [
     #code(raw(read("assets/开发细节/前后端分离/document.rs"), lang: "rust", block: true), size: 11.5pt)
+    #v(4pt)
+    题面在交出去之前已经是树，不是文本。
   ],
   [
     #code(raw(read("assets/开发细节/前后端分离/traits.rs"), lang: "rust", block: true), size: 11.5pt)
-    #v(6pt)
-    渲染与导出同构，插件实现的就是这两个 trait——所以两侧都能换。
+    #v(4pt)
+    渲染与导出同构，插件实现的就是这两个 trait——两侧都能换。
   ],
 )
 
