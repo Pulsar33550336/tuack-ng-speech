@@ -497,7 +497,6 @@ AST，即*抽象语法树*，是对题面（即 Markdown）的一种结构化表
 
 Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
 
-#v(6pt)
 #include "assets/开发细节/题面-一切皆AST/ast-pipeline.typ"
 
 == 前后端分离
@@ -505,7 +504,6 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
 Tuack-NG 做了前后端分离。\
 将与文件系统 / 操作系统无关的后端分离，使得 Tuack-NG 更容易被拓展。
 
-#v(4pt)
 #include "assets/开发细节/前后端分离/chains.typ"
 
 == 未细调
