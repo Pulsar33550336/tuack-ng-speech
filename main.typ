@@ -450,6 +450,17 @@ Tuack-NG 帮你导出到评测平台。
   ],
 )
 
+== 插件
+
+插件可以拓展 Tuack-NG 的功能。
+
+#v(8pt)
+- *处理器*：在渲染器处理题面的途中改写 AST；
+- *渲染器*：增加一个渲染目标；
+- *导出器*：增加一个导出目标；
+- *资源*：为 Tuack-NG 贡献新模板。
+
+
 = 开发细节
 
 Tuack-NG 不是一句#ruby[呼 #strike[Rust] 护 _Tuack-NG_][「Expecto _Tuack-NGum_!」]召唤出来的。
@@ -570,30 +581,6 @@ Tuack-NG 做了前后端分离。\
   #v(12pt)
   #line(length: 55%, stroke: 0.8pt + gray)
 ]
-
-== 插件
-
-插件用来扩展 Tuack-NG 的渲染、导出和题面能力。装好之后，它和内置目标用法一样：在 `ren` / `dump` 里直接写名字。
-
-#grid(
-  columns: (1.05fr, 1fr),
-  column-gutter: 20pt,
-  align: top,
-  [
-    #text(size: 15pt, weight: "bold")[插件能加什么]
-    #v(4pt)
-    #code(raw(read("assets/开发细节/插件/plugin-extends.txt"), lang: "txt", block: true), size: 12pt)
-    #v(6pt)
-    `ren --list` 和 `dump --list` 列出当前全部可用名字，内置的和插件的都在里面。
-  ],
-  [
-    #text(size: 15pt, weight: "bold")[怎么装]
-    #v(4pt)
-    #code(raw(read("assets/开发细节/插件/plugin-install.txt"), lang: "txt", block: true), size: 12pt)
-    #v(6pt)
-    市场在 `tuack-ng/tuack-ng-plugins`。刚装上是未信任状态，不加载；更新后取消信任，需要重新确认。
-  ],
-)
 
 == 架构
 
