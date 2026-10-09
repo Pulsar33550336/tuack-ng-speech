@@ -28,12 +28,7 @@
 }
 #title-slide()
 
-#let sep = line(length: 100%)
-
-#let script(it) = speaker-note[
-  #set text(size: 18pt)
-  #it
-]
+#import "parts/style.typ": *
 
 #script[
   大家好，我是 Tuack-NG 的开发者兼设计者，很高兴有这样一个机会，向大家介绍我的项目。
@@ -189,114 +184,13 @@ Tuack-NG 使用 Markdown 编写题面，并且支持*所有 CNOI 语法*。
   )
 }
 
-// ---------------------------------------------------------------- 题面 - 语法 - 模板系统
 // 左 = statement.md 原文，右 = 同一段展开之后；一对「模板 ↔ 展开」一种颜色
-#let MCODE = 9pt
-#let MLH = 10pt
-#let mono(s, size: MCODE) = text(font: "Maple Mono Normal NL NF", size: size, s)
-#let band(c, s, size: MCODE, lh: MLH, inset: (x: 0.3em), radius: 0.3em) = box(
-  fill: c,
-  inset: inset,
-  radius: radius,
-  height: 1.02 * lh,
-  align(horizon, mono(s, size: size)),
-)
-#let m1 = rgb("#9ec9f5") // input_file
-#let m2 = rgb("#ffd166") // data | length
-#let m3 = rgb("#9ee493") // tools.cases
-#let m4 = rgb("#f7a8c4") // output_file
-#let m5 = rgb("#c3aaf0") // sample.text
-#let m6 = rgb("#7fd4cf") // sample.file
-#let m7 = rgb("#ffcf9c") // 题面 - AST：Container
-#let m8 = rgb("#cfe8a9") // 题面 - AST：caption
-#let m9 = rgb("#d9c2f0") // 题面 - AST：Emphasis
-
-// m10 起是备用色，随便取用；要调色直接改这里
-#let m10 = rgb("#e8a4a4") // 红
-#let m11 = rgb("#a8c4e0") // 钢蓝（比 m1 深）
-#let m12 = rgb("#d8c48c") // 沙金
-#let m13 = rgb("#9fd0b8") // 薄荷（比 m6 深）
-#let m14 = rgb("#c0a8d8") // 紫（比 m5 深）
-
-// 代码面板外观（模板系统 / 外置表格 / Markdown 导出共用）
-#let panel(body, inset: (x: 10pt, y: 4pt)) = block(
-  fill: skyll,
-  inset: inset,
-  radius: 3pt,
-  width: 100%,
-  body,
-)
-
-// 代码面板：统一走主题的 block raw。
-// 主题把它压到 0.9em，所以这里按「实际字号」书写，由 helper 换算。
-#let code(body, size: 11pt) = text(size: size / 0.9, body)
-
-#let mrow(body, lh: MLH) = box(height: lh, align(left + horizon, body))
-#let mcol(items, size: MCODE, lh: MLH) = panel({
-  set text(size: size)
-  set par(leading: 0pt)
-  items.map(i => mrow(i, lh: lh)).join(linebreak())
-})
-
-#let m-left = (
-  mono("## 输入格式"),
-  [],
-  band(m1, "{{ statement.input_file() }}"),
-  [],
-  mono("输入的第一行包含两个正整数 $n, m$。"),
-  [],
-  mono("共 ") + band(m2, "{{ problem.data | length }}") + mono(" 个测试点。"),
-  [],
-  band(m3, "{{ tools.cases([1,2,3,5,6,7,114,514]) }}"),
-  [],
-  mono("## 输出格式"),
-  [],
-  band(m4, "{{ s.output_file() }}"),
-  [],
-  band(m5, "{{ sample.text(1) }}"),
-  // 右侧这一格展开成 12 行，这里补 12 行空行，下面才继续逐行对齐
-  ..range(12).map(_ => []),
-  mono("## 样例 2"),
-  [],
-  band(m6, "{{ sample.file(2) }}"),
-)
-
-#let m-right = (
-  mono("## 输入格式"),
-  [],
-  band(m1, "从文件 *candy.in* 中读入数据。"),
-  [],
-  mono("输入的第一行包含两个正整数 $n, m$。"),
-  [],
-  mono("共 ") + band(m2, "20") + mono(" 个测试点。"),
-  [],
-  band(m3, "$1 \\sim 3,5 \\sim 7,114,514$"),
-  [],
-  mono("## 输出格式"),
-  [],
-  band(m4, "输出到文件 *candy.out* 中。"),
-  [],
-  band(m5, "## 样例 1 输入"),
-  [],
-  band(m5, "```txt"),
-  band(m5, "1 10"),
-  band(m5, "76842568 885429956"),
-  band(m5, "```"),
-  [],
-  band(m5, "## 样例 1 输出"),
-  [],
-  band(m5, "```txt"),
-  band(m5, "0"),
-  band(m5, "```"),
-  [],
-  mono("## 样例 2"),
-  [],
-  band(m6, "见选手目录下的 *candy/candy2.in* 与 *candy/candy2.ans*。"),
-)
 
 == 题面 - 语法 - 模板系统
 
 Tuack-NG 还支持更强大的*模板系统*。
+
+#import "parts/template-system.typ": m-left, m-right
 
 #{
   set align(top)
@@ -319,48 +213,14 @@ Tuack-NG 还支持更强大的*模板系统*。
   )
 }
 
-// ---------------------------------------------------------------- 题面 - 语法 - 外置表格
-#let cblock(lines, size: 13pt, lang: none, leading: 0.3em, hl: -1, note: none) = panel(inset: (x: 10pt, y: 7pt), {
-  set text(font: "Maple Mono Normal NL NF", size: size)
-  set par(leading: leading, justify: false)
-  let body = lines
-    .enumerate()
-    .map(((i, l)) => {
-      let r = raw(l, lang: lang)
-      if i == hl { highlight(fill: rgb("#ffe08a"), extent: 3pt, radius: 2pt, r) } else { r }
-    })
-    .join(linebreak())
-  if note == none {
-    body
-  } else {
-    // 备注放整个代码块的右下角
-    grid(
-      columns: (1fr, auto),
-      column-gutter: 10pt,
-      align: (left + bottom, right + bottom),
-      body, raw(note, lang: lang),
-    )
-  }
-})
-
-#let tbl-jinja = (
-  "| 测试点编号 | $T =$ | $N \\le$ | $\\lvert a_i \\rvert \\le$ |",
-  "| :-: | :-: | :-: | :-: |",
-  "{%- set prev_T = None %}",
-  "{%- set prev_max_n = None %}",
-  "{%- set prev_max_a = None %}",
-  "{%- for group in data_cases %}",
-  "| {{ tools.cases(group.id) }} | {% if group.args.T == prev_T %} ^ {% else %}${{ group.args.T }}${%- set prev_T = group.args.T %}{% endif %} | {% if group.args.max_n == prev_max_n %} ^ {% else %}${{ group.args.max_n }}${%- set prev_max_n = group.args.max_n %}{% endif %} | {% if group.args.max_a == prev_max_a %} ^ {% else %}${{ group.args.max_a }}${%- set prev_max_a = group.args.max_a %}{% endif %} |",
-  "{%- endfor %}",
-)
-
-// 拿出来写：tables/1.lua（导数之殇的真实文件）
 
 == 题面 - 语法 - 外置表格
 
 手写的表会过时，那就用模板自动生成——可题面里就变成了一坨。
 
 #v(4pt)
+#import "parts/external-table.typ": tbl-jinja
+
 #cblock(tbl-jinja, size: 16pt, leading: 0.55em, hl: 6, note: "PS：高亮内容是一行 🤡")
 
 ---
@@ -368,32 +228,7 @@ Tuack-NG 还支持更强大的*模板系统*。
 同一张表，换成一个 Lua 文件。
 
 #v(4pt)
-#code(size: 12.5pt)[
-  ```lua
-  local il = tng.tools.inline_latex
-
-  return tng.table {
-      headers = { "测试点编号", il("T ="), il("N \\le"), il("\\lvert a_i \\rvert \\le") },
-      align = { "center", "center", "center", "center" },
-
-      data = tng.config.data_cases:map(function(group)
-          local args = group.args
-          return {
-              tng.tools.cases(group.id),
-              tng.tools.inline_latex(args.T),
-              tng.tools.inline_latex(args.max_n),
-              tng.tools.inline_latex(args.max_a)
-          }
-      end),
-
-      merge_rules = {
-          { col = 2, merge_row = true },
-          { col = 3, merge_row = true },
-          { col = 4, merge_row = true },
-      },
-  }
-  ```
-]
+#code(raw(read("code/table-merge.lua"), lang: "lua", block: true), size: 12.5pt)
 
 == 题面 - 渲染
 
@@ -419,63 +254,11 @@ Tuack-NG 支持多种渲染目标，包括但不限于 (C)NOI、CCPC 与 Markdow
 
 ---
 
-#let MD-CODE = 8.5pt
-#let MD-LH = 12pt
-#let md-hi(c, s) = band(c, s, size: MD-CODE, lh: MD-LH)
-#let md-tx(s) = mono(s, size: MD-CODE)
-
-// 三份导出共有的开头：两个标题各带一行正文（H 为标题层级）
-#let md-head(H) = (
-  md-hi(m1, H + " 输入格式"),
-  md-tx(""),
-  md-tx("第一行一个整数 $n$。"),
-  md-tx(""),
-  md-hi(m1, H + " 输出格式"),
-  md-tx(""),
-  md-tx("一行一个整数。"),
-  md-tx(""),
-)
-
-#let md-plain = (
-  ..md-head("##"),
-  md-hi(m2, "| 测试点 | $n \\le$ |"),
-  md-hi(m2, "| :----: | ------: |"),
-  md-hi(m2, "|  $1$   |    $10$ |"),
-  md-hi(m2, "|  $2$   |       ^ |"),
-)
-
-#let md-loj = (
-  ..md-head("##"),
-  md-hi(m2, "| 测试点<!--row:0,col: 0--> | $n \\le$<!--row:0,col: 1--> |"),
-  md-hi(m2, "| :-----------------------: | -------------------------: |"),
-  md-hi(m2, "|  $1$<!--row:1,col: 0-->   |    $10$<!--row:1,col: 1--> |"),
-  md-hi(m2, "|  $2$<!--row:2,col: 0-->   |    $10$<!--row:1,col: 1--> |"),
-)
-
-#let md-uoj = (
-  ..md-head("###"),
-  md-hi(m2, "<table>"),
-  md-hi(m2, "  <thead>"),
-  md-hi(m2, "    <tr>"),
-  md-hi(m2, "      <th align=\"center\"> 测试点 </th>"),
-  md-hi(m2, "      <th align=\"right\"> $n \\le$ </th>"),
-  md-hi(m2, "    </tr>"),
-  md-hi(m2, "  </thead>"),
-  md-hi(m2, "  <tbody>"),
-  md-hi(m2, "    <tr>"),
-  md-hi(m2, "      <td align=\"center\"> $1$ </td>"),
-  md-hi(m2, "      <td rowspan=\"2\" align=\"right\"> $10$ </td>"),
-  md-hi(m2, "    </tr>"),
-  md-hi(m2, "    <tr>"),
-  md-hi(m2, "      <td align=\"center\"> $2$ </td>"),
-  md-hi(m2, "    </tr>"),
-  md-hi(m2, "  </tbody>"),
-  md-hi(m2, "</table>"),
-)
-
 Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标题层级，表格等。
 
 #v(-12pt)
+
+#import "parts/render-targets.typ": MD-CODE, MD-LH, md-head, md-plain, md-loj, md-uoj
 
 #grid(
   columns: (1.2fr, 2.72fr, 2.5fr),
@@ -507,46 +290,12 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
   align: top,
   [
     很多人是这么造数据的：
-    #code(size: 14pt)[
-      ```cpp
-      #include <bits/stdc++.h>
-      using namespace std;
-
-      const int N = 10;
-      const int M = 20;
-
-      int main() {
-          freopen("x.in", "w", stdout);
-          srand(time(0));
-          int n = rand() % N + 1;
-          int m = rand() % M + 1;
-          printf("%d %d\n", n, m);
-          // ...
-      }
-      ```
-    ]
+    #code(raw(read("code/gen-naive.cpp"), lang: "cpp", block: true), size: 14pt)
     但参数和文件名写死在源码里，每跑一次就得改一次。
   ],
   [
     聪明些的写法：
-    #code(size: 14pt)[
-      ```cpp
-      #include <bits/stdc++.h>
-      using namespace std;
-      const int T = 6;
-      int N[] = { 1, 2, 2, 10, 100, 100000 };
-      long long M[] = { 10, 20, 20, 100, 1000, 1000000000000000000LL };
-
-      int main() {
-          srand(time(0));
-          for (int i = 0; i < T; ++i) {
-              freopen((to_string(i + 1) + ".in").c_str(),
-                      "w", stdout);
-              // ...
-          }
-      }
-      ```
-    ]
+    #code(raw(read("code/gen-array.cpp"), lang: "cpp", block: true), size: 14pt)
     但*不可复现*：种子是 `time(0)`；就算种子固定，*改一个也得全部重造*——数组里插一个点，它后面所有点的随机序列都跟着变了。
   ],
 )
@@ -560,45 +309,12 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
   column-gutter: 20pt,
   align: top,
   [
-    #code(size: 14pt)[
-      ```cpp
-      #include "testlib.h"
-
-      int main(int argc, char* argv[]) {
-          registerGen(argc, argv, 1);
-
-          // 格式: n=... m=... seed=...
-          int n = opt<int>("n", 5);
-          long long m = opt<long long>("m", 20);
-          long long seed =
-              opt<unsigned long long>("seed", 0);
-
-          rnd.setSeed(seed);
-
-          cout << n << " " << m << endl;
-          // ...
-      }
-      ```
-    ]
+    #code(raw(read("code/gen-testlib.cpp"), lang: "cpp", block: true), size: 14pt)
   ],
   [
     参数从配置里来：
     #v(-8pt)
-    #code(size: 14pt)[
-      ```json
-      "args": { "n": 100000, "m": 1000000000000000000 },
-      "data": [
-        {
-          "id": [2,3], "score": 10,
-          "args": { "n": 2, "m": 20 }
-        },
-        {
-          "id": [19,20], "score": 10,
-          "args": { "n": 100000, "m": 1000000000000000000 }
-        },
-      ]
-      ```
-    ]
+    #code(raw(read("code/gen-args.json"), lang: "json", block: true), size: 14pt)
     #v(-8pt)
     然后，生成器会被传入 `-n=2 -m=20 -seed=<...>`。
   ],
@@ -616,17 +332,7 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
   column-gutter: 20pt,
   align: top,
   [
-    #code(size: 16pt)[
-      ```json
-      {
-        "1": 12093443819787335159,
-        "2": 12011163482082634790,
-        "3": 13007200171360182696,
-        // ...
-        "20": 8648298818406258413
-      }
-      ```
-    ]
+    #code(raw(read("code/seed.json"), lang: "json", block: true), size: 16pt)
   ],
   [
     #set align(horizon)
@@ -650,20 +356,7 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
   column-gutter: 20pt,
   align: top,
   [
-    #code(size: 16pt)[
-      ```json
-      "tests": {
-        "std": {
-          "expected": "== 100",
-          "path": "tests/std.cpp"
-        },
-        "tests/b.cpp": {
-          "expected": [">= 10", "<= 60"],
-          "path": "tests/b.cpp"
-        }
-      }
-      ```
-    ]
+    #code(raw(read("code/tests.json"), lang: "json", block: true), size: 16pt)
   ],
   [
     #set align(horizon)
@@ -673,7 +366,6 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
     支持子任务（捆绑测试）与 SPJ。
   ],
 )
-
 
 == 数据与测试 - 校验
 
@@ -686,33 +378,10 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
   column-gutter: 20pt,
   align: top,
   [
-    #code(size: 16pt)[
-      ```cpp
-      // val/val.cpp
-      #include "testlib.h"
-
-      int main(int argc, char* argv[]) {
-        registerValidation(argc, argv);
-
-        int n = inf.readInt(1, 100000, "n");
-        inf.readEoln();
-        inf.readEof();
-        return 0;
-      }
-      ```
-    ]
+    #code(raw(read("code/val.cpp"), lang: "cpp", block: true), size: 16pt)
   ],
   [
-    #code(size: 16pt)[
-      ```json
-      "validator": {
-        "data": {
-          "source": "val/val.cpp",
-          "deps": ["val/testlib.h"]
-        }
-      }
-      ```
-    ]
+    #code(raw(read("code/validator.json"), lang: "json", block: true), size: 16pt)
     同时，我们支持在生成数据时顺手校验，从源头解决问题。
   ],
 )
@@ -734,56 +403,17 @@ Tuack-NG 帮你导出到评测平台。
   [
     #align(center)[Lemon]
 
-    #code(size: 12pt)[
-      ```txt
-      lemon/
-      └── data/
-          └── aplusb/
-              ├── aplusb1.in
-              ├── aplusb1.ans
-              ├── aplusb2.in
-              ├── aplusb2.ans
-              └── ...
-      ```
-    ]
+    #code(raw(read("code/dump-lemon.txt"), lang: "txt", block: true), size: 12pt)
   ],
   [
     #align(center)[Arbiter]
 
-    #code(size: 12pt)[
-      ```txt
-      arbiter/main/
-      ├── setup.cfg
-      ├── team.info
-      ├── day<N>.info
-      ├── task<N>_<M>.info
-      ├── data/
-      ├── evaldata/
-      ├── final/
-      ├── players/
-      ├── result/
-      ├── filter/
-      ├── tmp/
-      └── down/
-      ```
-    ]
+    #code(raw(read("code/dump-arbiter.txt"), lang: "txt", block: true), size: 12pt)
   ],
   [
     #align(center)[CCR-Plus]
 
-    #code(size: 12pt)[
-      ```txt
-      ccr-plus/
-      ├── .ccr
-      ├── data/aplusb/
-      │   ├── .prb
-      │   ├── 1.in
-      │   ├── 1.ans
-      │   └── <SPJ>
-      ├── src/
-      └── result/
-      ```
-    ]
+    #code(raw(read("code/dump-ccr-plus.txt"), lang: "txt", block: true), size: 12pt)
   ],
 )
 
@@ -814,28 +444,11 @@ Tuack-NG 帮你导出到评测平台。
   [
     #text(size: 18pt, weight: "bold")[批量改配置：`conf`]
     #v(6pt)
-    #code(size: 14pt)[
-      ```txt
-      tuack-ng conf title "2025 模拟赛"
-      tuack-ng conf time 2.0
-      tuack-ng conf length 5h
-      tuack-ng conf conf <字段> <值>
-      tuack-ng conf migrate
-      ```
-    ]
+    #code(raw(read("code/conf-cmds.txt"), lang: "txt", block: true), size: 14pt)
     #v(8pt)
     在比赛日或比赛层级执行，一次改掉下面所有题目。
   ],
 )
-
-// 用法：#ruby[上方小字][基文]
-#let ruby(rt, rb) = context {
-  let w = measure(rb).width
-  box(width: w)[
-    #place(top + center, dy: -0.82em, text(size: 0.7em, rt))
-    #rb
-  ]
-}
 
 = 开发细节
 
@@ -859,86 +472,11 @@ AST，即*抽象语法树*，是对题面（即 Markdown）的一种结构化表
   fill: gray,
 )[注：与 AST 相关的概念还有具体语法树（CST），它更侧重保留具体语法结构。Tuack-NG 使用的是 AST，感兴趣的可以自行了解 CST。]
 
-
-// ---------------------------------------------------------------- 题面 - AST
 // 左 = Markdown 原文，右 = 解析出的 AST；同一种元素一种颜色，不追求对齐
-// 左栏字号固定 11pt，调用处不再逐个写 size / lh
-#let src-hi(c, s) = band(c, s, size: 11pt, lh: 14pt)
-#let src-tx(s) = mono(s, size: 11pt)
-
-#let m-md = (
-  src-hi(m1, "$1 \\leq n \\leq 10^5$") + src-hi(m10, "，") + src-hi(m1, "$r_i \\leq 2$"),
-  [],
-  src-hi(m2, "$$"),
-  src-hi(m2, "\\sum_{i=1}^{n} r_i \\leq 10^{18}"),
-  src-hi(m2, "$$"),
-  [],
-  src-hi(m3, "![")
-    + src-hi(m4, "示例图片")
-    + src-hi(m3, "](")
-    + src-hi(m5, "img/demo.png")
-    + src-hi(m3, ")")
-    + src-hi(m11, "{")
-    + src-hi(m6, "width=40%")
-    + src-hi(m11, "}"),
-  [],
-  src-hi(m7, ":::") + src-hi(m14, "figure") + src-hi(m13, "{") + src-hi(m8, "caption=\"看我！\"") + src-hi(m13, "}"),
-  src-hi(m10, "这是") + src-hi(m12, "*居中*") + src-hi(m10, "文字！"),
-  src-hi(m7, ":::"),
-)
-
-// 右栏：公共基础缩进（不上色）+ 每个嵌套层 3 空格，用该层节点的颜色
-// 每深一层 4 格：该层父节点有颜色就用色条，没有就留空格（none）
-// 色条圆角、无左右内边距
-#let gut(..cs) = (
-  mono("    ")
-    + cs
-      .pos()
-      .map(c => if c == none {
-        mono("    ")
-      } else {
-        band(c, "    ", inset: 0pt, radius: 0.25em)
-      })
-      .join()
-)
-
-#let m-ast = (
-  mono("Document { blocks: ["),
-  gut() + mono("Paragraph(["),
-  gut(none) + band(m1, "Latex(\"1 \\\\leq n \\\\leq 10^5\"),"),
-  gut(none) + band(m10, "Text(\"，\"),"),
-  gut(none) + band(m1, "Latex(\"r_i \\\\leq 2\")"),
-  gut() + mono("]),"),
-  gut() + band(m2, "LatexBlock(\"\\\\sum_{i=1}^{n} r_i \\\\leq 10^{18}\\n\"),"),
-  gut() + mono("Paragraph(["),
-  gut(none) + band(m3, "Image(Image {"),
-  gut(none, m3) + band(m5, "destination: \"img/demo.png\","),
-  gut(none, m3) + band(m3, "title: None,"),
-  gut(none, m3) + band(m4, "alt: \"示例图片\","),
-  gut(none, m3) + band(m11, "attr: Some(ImageAttributes {"),
-  gut(none, m3, m11) + band(m6, "width: Some(\"40%\"),"),
-  gut(none, m3, m11) + band(m11, "height: None,"),
-  gut(none, m3) + band(m11, "}),"),
-  gut(none) + band(m3, "}),"),
-  gut() + mono("]),"),
-  gut() + band(m7, "Container(Container {"),
-  gut(m7) + band(m7, "kind: ") + band(m14, "\"figure\","),
-  gut(m7) + band(m13, "params: [") + band(m8, "KeyValue(\"caption\", \"看我！\")") + band(m13, "],"),
-  gut(m7) + band(m7, "blocks: ["),
-  gut(m7, m7) + mono("Paragraph(["),
-  gut(m7, m7, none)
-    + band(m10, "Text(\"这是\")")
-    + mono(", ")
-    + band(m12, "Emphasis([Text(\"居中\")])")
-    + mono(", ")
-    + band(m10, "Text(\"文字！\"),"),
-  gut(m7, m7) + mono("]),"),
-  gut(m7) + band(m7, "],"),
-  gut() + band(m7, "}),"),
-  mono("] }"),
-)
 
 ---
+
+#import "parts/ast-compare.typ": m-md, m-ast
 
 #grid(
   columns: (1fr, 1.35fr),
@@ -960,197 +498,7 @@ AST，即*抽象语法树*，是对题面（即 Markdown）的一种结构化表
 Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
 
 #v(6pt)
-#text(size: 13pt)[
-  #diagram(
-    node-stroke: 0.7pt,
-    node-corner-radius: 4pt,
-    node-inset: 5pt,
-    edge-stroke: 1pt,
-    spacing: (40pt, 30pt),
-    {
-      // 题面源、AST 与规则检查
-      node(name: <source>, (0, 0), [题面源])
-
-      node(
-        name: <ast>,
-        (1, 0),
-        [*AST*],
-        stroke: 1.4pt,
-        fill: rgb("#eaf2fb"),
-      )
-
-      node(
-        name: <doc>,
-        (1, -1.5),
-        [`doc check` / `doc format`
-
-          根据规则检查 / 修改 AST],
-        stroke: none,
-        fill: none,
-      )
-
-      // 处理器列表
-      let processors = (
-        (
-          name: <loj>,
-          body: [
-            `loj_table`
-
-            将表格改写成 LOJ 兼容格式
-          ],
-        ),
-        (
-          name: <htm>,
-          body: [
-            `html_table`
-
-            将表格改写为 HTML
-          ],
-        ),
-        (
-          name: <uoj>,
-          body: [
-            `uoj_title`
-
-            UOJ 兼容：每个标题层级加一
-          ],
-        ),
-        (
-          name: <plg>,
-          body: [
-            插件注册的处理器
-
-            任意操作
-          ],
-        ),
-      )
-
-      // 处理器节点围绕 y = 0 对称排列
-      // 步长必须取整数：Fletcher 的网格行距按行算，落在非整数坐标上间距会不匀
-      let proc-step = 1
-      let proc-first-y = (
-        -(
-          (processors.len() - 1) / 2
-        )
-          * proc-step
-      )
-
-      node(
-        (2, proc-first-y - 1),
-        [*处理器*],
-        stroke: none,
-        fill: none,
-      )
-
-      for (i, proc) in processors.enumerate() {
-        let y = (
-          (
-            i - (processors.len() - 1) / 2
-          )
-            * proc-step
-        )
-
-        node(
-          (2, y),
-          proc.body,
-          name: proc.name,
-          fill: rgb("#fdf0f0"),
-          height: 53pt,
-        )
-      }
-
-      // 将所有处理器包进同一个分组
-      node(
-        enclose: (<loj>, <htm>, <uoj>, <plg>),
-        name: <procs>,
-        stroke: 1.2pt + rgb("#e8a4a4"),
-        fill: rgb("#fef7f7"),
-        inset: 10pt,
-      )
-
-      // 处理后的 AST
-      node(
-        name: <ast-m>,
-        (3, 0),
-        [*AST'*],
-        stroke: 1.4pt,
-        fill: rgb("#eaf2fb"),
-      )
-
-      // 打印器列表
-      let printers = (
-        (
-          name: <typst>,
-          body: [typst -> `.typ`],
-        ),
-        (
-          name: <md>,
-          body: [markdown -> `.md`],
-        ),
-        (
-          name: <plug-printer>,
-          body: [插件 -> `.<?>`],
-        ),
-      )
-
-      // 打印器节点围绕 y = 0 对称排列
-      let printer-step = 1
-      let printer-first-y = (
-        -(
-          (printers.len() - 1) / 2
-        )
-          * printer-step
-      )
-
-      node(
-        (4, printer-first-y - 0.6),
-        [*打印器*],
-        stroke: none,
-        fill: none,
-      )
-
-      for (i, printer) in printers.enumerate() {
-        let y = (
-          (
-            i - (printers.len() - 1) / 2
-          )
-            * printer-step
-        )
-
-        node(
-          (4, y),
-          printer.body,
-          name: printer.name,
-          fill: rgb("#eef6ee"),
-          height: 34pt,
-        )
-      }
-
-      // 连线
-      edge(
-        <source.east>,
-        <ast.west>,
-        [`parse()`],
-        "->",
-        label-pos: 0.5,
-      )
-
-      edge(
-        <doc.south>,
-        <ast.north>,
-        "<->",
-        stroke: 0.6pt,
-      )
-
-      edge(<ast.east>, <procs.west>, "->")
-      edge(<procs.east>, <ast-m.west>, "->")
-
-      edge(<ast-m.east>, <typst.west>, "->")
-      edge(<ast-m.east>, <md.west>, "->")
-      edge(<ast-m.east>, <plug-printer.west>, "->")
-    },
-  )
-]
+#include "parts/ast-pipeline.typ"
 
 == 未细调
 
@@ -1177,27 +525,14 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   [
     #text(size: 15pt, weight: "bold")[插件能加什么]
     #v(4pt)
-    #code(size: 12pt)[
-      ```txt
-      渲染目标    tuack-ng ren <名字>
-      导出目标    tuack-ng dump <名字>
-      命令        新的子命令
-      资源        模板、字体
-      ```
-    ]
+    #code(raw(read("code/plugin-extends.txt"), lang: "txt", block: true), size: 12pt)
     #v(6pt)
     `ren --list` 和 `dump --list` 列出当前全部可用名字，内置的和插件的都在里面。
   ],
   [
     #text(size: 15pt, weight: "bold")[怎么装]
     #v(4pt)
-    #code(size: 12pt)[
-      ```txt
-      tuack-ng plugin market install <name>
-      tuack-ng plugin list
-      tuack-ng plugin trust <name>
-      ```
-    ]
+    #code(raw(read("code/plugin-install.txt"), lang: "txt", block: true), size: 12pt)
     #v(6pt)
     市场在 `tuack-ng/tuack-ng-plugins`。刚装上是未信任状态，不加载；更新后取消信任，需要重新确认。
   ],
@@ -1212,32 +547,12 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   column-gutter: 20pt,
   align: top,
   [
-    #code(size: 12pt)[
-      ```txt
-      tuack-ng          命令行
-      tuack-lib         契约：类型与 trait
-      tuack-utils       内置实现：导出器、渲染
-      tuack-plugin-sdk  插件作者的 SDK
-      ```
-    ]
+    #code(raw(read("code/arch-crates.txt"), lang: "txt", block: true), size: 12pt)
   ],
   [
-    #code(size: 12pt)[
-      ```rust
-      // tuack-plugin-sdk 里的渲染器契约
-      pub trait Renderer: Send + Sync {
-          fn new() -> Self where Self: Sized;
-          fn render(&self, doc: RenderDocument)
-              -> Result<(PathBuf, Vec<OutputFile>), Error>;
-      }
-
-      // 实现 trait，再调一个宏注册成 extism 导出函数
-      renderer!(MyRenderer);
-      ```
-    ]
+    #code(raw(read("code/renderer-trait.rs"), lang: "rust", block: true), size: 12pt)
   ],
 )
-
 
 == 前后端分离
 
@@ -1250,26 +565,14 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   [
     #text(size: 15pt, weight: "bold")[题面]
     #v(4pt)
-    #code(size: 12pt)[
-      ```txt
-      一份 statement.md
-            ↓
-      NOI ／ CCPC ／ Markdown
-      ```
-    ]
+    #code(raw(read("code/rendering-flow.txt"), lang: "txt", block: true), size: 12pt)
     #v(6pt)
     换目标不用动题面。前面那页三种渲染结果就是从同一份源出来的，因为中间那棵 AST 是共用的。
   ],
   [
     #text(size: 15pt, weight: "bold")[导出]
     #v(4pt)
-    #code(size: 12pt)[
-      ```txt
-      一份 conf.json
-            ↓
-      Lemon ／ Arbiter ／ CCR-Plus
-      ```
-    ]
+    #code(raw(read("code/assemble-flow.txt"), lang: "txt", block: true), size: 12pt)
     #v(6pt)
     打印器、导出器都是可插拔的后端，插件挂的就是这里；一个后端出问题，不影响别的目标。
   ],
@@ -1286,14 +589,7 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   [
     #text(size: 15pt, weight: "bold")[边界只走数据]
     #v(4pt)
-    #code(size: 12pt)[
-      ```txt
-      宿主 (tuack-ng)                插件 (wasm)
-
-        render(RenderDocument)  ──▶
-        ◀── 主产物路径 + OutputFile 列表
-      ```
-    ]
+    #code(raw(read("code/wasm-runtime.txt"), lang: "txt", block: true), size: 12pt)
     #v(6pt)
     跨 extism 边界只传可序列化的数据与可恢复的错误；`Renderer`、`Dumper` 这些 host 侧 trait 留在各自模块，不出门。
   ],

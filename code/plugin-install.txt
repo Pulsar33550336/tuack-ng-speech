@@ -1,0 +1,3 @@
+tuack-ng plugin market install <name>
+tuack-ng plugin list
+tuack-ng plugin trust <name>

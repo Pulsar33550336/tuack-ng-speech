@@ -1,0 +1,4 @@
+tuack-ng          命令行
+tuack-lib         契约：类型与 trait
+tuack-utils       内置实现：导出器、渲染
+tuack-plugin-sdk  插件作者的 SDK

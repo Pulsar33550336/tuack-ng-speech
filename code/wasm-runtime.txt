@@ -1,0 +1,4 @@
+宿主 (tuack-ng)                插件 (wasm)
+
+  render(RenderDocument)  ──▶
+  ◀── 主产物路径 + OutputFile 列表

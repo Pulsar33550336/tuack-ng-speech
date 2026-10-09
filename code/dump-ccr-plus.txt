@@ -1,0 +1,9 @@
+ccr-plus/
+├── .ccr
+├── data/aplusb/
+│   ├── .prb
+│   ├── 1.in
+│   ├── 1.ans
+│   └── <SPJ>
+├── src/
+└── result/

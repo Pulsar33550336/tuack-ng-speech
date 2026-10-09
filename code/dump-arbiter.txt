@@ -1,0 +1,13 @@
+arbiter/main/
+├── setup.cfg
+├── team.info
+├── day<N>.info
+├── task<N>_<M>.info
+├── data/
+├── evaldata/
+├── final/
+├── players/
+├── result/
+├── filter/
+├── tmp/
+└── down/

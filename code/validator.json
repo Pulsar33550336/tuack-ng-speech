@@ -1,0 +1,6 @@
+"validator": {
+  "data": {
+    "source": "val/val.cpp",
+    "deps": ["val/testlib.h"]
+  }
+}

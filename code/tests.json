@@ -1,0 +1,10 @@
+"tests": {
+  "std": {
+    "expected": "== 100",
+    "path": "tests/std.cpp"
+  },
+  "tests/b.cpp": {
+    "expected": [">= 10", "<= 60"],
+    "path": "tests/b.cpp"
+  }
+}
