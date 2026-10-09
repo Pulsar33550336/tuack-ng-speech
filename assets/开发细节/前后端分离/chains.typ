@@ -15,12 +15,12 @@
     edge-stroke: 1pt,
     spacing: (18pt, 15pt),
 
-    node((-0.8, 0), align(left)[ren], stroke: none, fill: none, width: 74pt),
-    node((-0.8, 1), align(left)[dump], stroke: none, fill: none, width: 74pt),
-    node((-0.8, 2), align(left)[dmk gen], stroke: none, fill: none, width: 74pt),
-    node((-0.8, 3), align(left)[validate], stroke: none, fill: none, width: 74pt),
-    node((-0.8, 4), align(left)[test], stroke: none, fill: none, width: 74pt),
-    node((-0.8, 5), align(left)[doc], stroke: none, fill: none, width: 74pt),
+    node((-0.8, 0), box(width: 74pt, align(left)[ren]), stroke: none, fill: none),
+    node((-0.8, 1), box(width: 74pt, align(left)[dump]), stroke: none, fill: none),
+    node((-0.8, 2), box(width: 74pt, align(left)[dmk gen]), stroke: none, fill: none),
+    node((-0.8, 3), box(width: 74pt, align(left)[validate]), stroke: none, fill: none),
+    node((-0.8, 4), box(width: 74pt, align(left)[test]), stroke: none, fill: none),
+    node((-0.8, 5), box(width: 74pt, align(left)[doc]), stroke: none, fill: none),
 
     node((0, 0), [`Document`], fill: S, name: <r0>),
     node((1, 0), [`RenProcessor`], fill: T, name: <r1>),
@@ -54,9 +54,10 @@
     node((1, 5), [报告], fill: O, name: <c1>),
     edge(<c0.east>, <c1.west>, "->", [按规则检查]),
 
-    node((-0.8, 6.5), align(left)[图例], stroke: none, fill: none, width: 74pt),
-    node((0.25, 6.5), align(left)[#box(fill: S, width: 20pt, height: 13pt) #h(5pt) 结构体（数据）], stroke: none, fill: none),
-    node((1.5, 6.5), align(left)[#box(fill: T, width: 20pt, height: 13pt) #h(5pt) trait（能力）], stroke: none, fill: none),
+    node((-0.8, 6.5), box(width: 74pt, align(left)[图例]), stroke: none, fill: none),
+    node((0.25, 6.5), box(width: 120pt, align(left)[#box(fill: S, width: 20pt, height: 13pt) #h(5pt) 结构体（数据）]), stroke: none, fill: none),
+    node((1.5, 6.5), box(width: 120pt, align(left)[#box(fill: T, width: 20pt, height: 13pt) #h(5pt) trait（能力）]), stroke: none, fill: none),
+    node((2.75, 6.5), box(width: 120pt, align(left)[#box(fill: O, width: 20pt, height: 13pt) #h(5pt) 产物]), stroke: none, fill: none),
     node((2.75, 6.5), align(left)[#box(fill: O, width: 20pt, height: 13pt) #h(5pt) 产物], stroke: none, fill: none),
   )
 ]
