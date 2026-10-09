@@ -500,52 +500,6 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
 #v(6pt)
 #include "assets/开发细节/题面-一切皆AST/ast-pipeline.typ"
 
-== 前后端分离
-
-每个功能都先有一个*抽象*，再让不同的东西去实现它。上层只认这几张脸。
-
-#v(4pt)
-#grid(
-  columns: (auto, 1fr),
-  column-gutter: 16pt,
-  row-gutter: 6pt,
-  align: (left, left),
-  [#mono("Document")],        [题面的中间表示：解析器的产物，后面所有工序都吃它],
-  [#mono("Generator")],       [造数据：参数 + 种子 -> 字节流，往标准输出吐],
-  [#mono("Validator")],       [校验输入文件：合不合法，一句话],
-  [#mono("Runner")],          [编译与运行：超时超内存由它盯着（全项目唯一用异步的地方）],
-  [#mono("Data")],            [一个测试点的搬运：输入、答案、参数],
-  [#mono("RenProcessor")],    [题面改写：按目标平台改方言，进出都是 AST],
-  [#mono("Renderer")],        [渲染：一份文档 -> 主产物 + 全部产物文件],
-  [#mono("Dumper")],          [导出：与渲染同构，产物换成评测平台的目录结构],
-  [#mono("AssetProvider")],   [资源注入：题号 + 逻辑路径 -> 字节流，惰性取用],
-)
-
-#v(6pt)
-这些名字全部定义在一个不依赖任何实现的地方，所以谁来填都行。
-
----
-
-== 前后端分离 - 谁来实现
-
-#v(2pt)
-#include("assets/开发细节/前后端分离/layers.typ")
-
-#v(8pt)
-#grid(
-  columns: (auto, 1fr),
-  column-gutter: 16pt,
-  row-gutter: 6pt,
-  align: (left, left),
-  [#mono("tuack-lib")],        [只放数据与 trait：上面那些抽象的定义，不碰文件、不碰全局状态],
-  [#mono("tuack-utils")],      [真家伙都在这儿：CppGenerator、CppValidator、FsAssetProvider、Typst／Markdown 渲染器、Lemon／Arbiter 导出器],
-  [#mono("tuack-config")],     [配置文件的结构，只依赖契约层],
-  [#mono("tuack-plugin-sdk")], [把同一组 trait 交给 WASM 插件——插件填的是同样的空],
-  [#mono("tuack-ng-parser")],  [AST 与解析／打印，三方共用],
-  [#mono("tuack-ng")],         [前端：拼装、交互、进度条，负责把产物写到磁盘],
-)
-
-
 == 未细调
 
 #align(center)[
@@ -559,6 +513,37 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   #v(12pt)
   #line(length: 55%, stroke: 0.8pt + gray)
 ]
+
+== 前后端分离
+
+每个功能先有一张脸，上层只认它。箭头是这张脸负责的动作。
+
+#v(2pt)
+#include("assets/开发细节/前后端分离/abstractions.typ")
+
+#v(8pt)
+这些脸全部定义在一个不依赖任何实现的地方——所以谁来填都行。
+
+
+== 前后端分离 - 谁来实现
+
+#v(2pt)
+#include("assets/开发细节/前后端分离/layers.typ")
+
+#v(8pt)
+#grid(
+  columns: (auto, 1fr),
+  column-gutter: 16pt,
+  row-gutter: 6pt,
+  align: (left, left),
+  [#mono("tuack-lib")],        [只放数据与 trait：上面那些抽象的定义，不碰文件、不碰全局状态],
+  [#mono("tuack-utils")],      [真家伙都在这儿：CppGenerator、CppValidator、FsAssetProvider、Typst/Markdown 渲染器、Lemon/Arbiter 导出器],
+  [#mono("tuack-config")],     [配置文件的结构，只依赖契约层],
+  [#mono("tuack-plugin-sdk")], [把同一组 trait 交给 WASM 插件——插件填的是同样的空],
+  [#mono("tuack-ng-parser")],  [AST 与解析/打印，三方共用],
+  [#mono("tuack-ng")],         [前端：拼装、交互、进度条，负责把产物写到磁盘],
+)
+
 
 == 插件
 
