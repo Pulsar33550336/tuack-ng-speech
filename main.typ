@@ -511,6 +511,52 @@ Tuack-NG 做了前后端分离。\
 #v(4pt)
 #include "assets/开发细节/前后端分离/roles.typ"
 
+== 前后端分离 - 实际成果
+
+#grid(
+  columns: (0.5fr, 1fr, 1fr),
+  column-gutter: 16pt,
+  align: top,
+  [
+    #align(center)[#text(size: 18pt)[*RPC*]]
+    #v(2pt)
+    Tuack-NG `rpc` 分支上，正在开发的，基于 JSON-RPC 2.0 的 RPC 服务端。
+  ],
+  [
+    #align(center)[#text(size: 18pt)[*Tuack-GUI*]]
+    #v(2pt)
+    Tuack-NG 的图形化前端。
+
+    目前基于命令行，基于 RPC 的逻辑正在接入。
+  ],
+  [
+    #align(center)[#text(size: 18pt)[*Tuack for VS Code*]]
+    #v(2pt)
+    Tuack-NG 的 VSCode 图形化前端，基于 RPC。WIP。
+  ],
+)
+#v(-18pt)
+#grid(
+  columns: (0.5fr, 1fr, 1fr),
+  column-gutter: 16pt,
+  [],
+  [
+    #align(center)[
+      #figure(caption: "https://github.com/tuackng/Tuack-GUI", numbering: none)[
+        #image("assets/开发细节/前后端分离/qr-gui.png", height: 40%)
+      ]
+    ]
+  ],
+  [
+    #align(center)[
+      #figure(caption: "https://github.com/Qaaxaap/tuack-vscode", numbering: none)[
+        #image("assets/开发细节/前后端分离/qr-vscode.png", height: 40%)
+      ]
+    ]
+  ],
+)
+
+
 == 未细调
 
 #align(center)[
