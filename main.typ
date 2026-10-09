@@ -1,5 +1,6 @@
 #import "@preview/xwysyy:0.4.0": *
 #import "@preview/cuti:0.4.0": show-cn-fakebold
+#import "@preview/fletcher:0.5.8": diagram, edge, node
 #show: show-cn-fakebold
 
 #show: xwysyy-pre.with(
@@ -838,7 +839,7 @@ Tuack-NG 帮你导出到评测平台。
 
 = 开发细节
 
-Tuack-NG 不是一句#ruby[呼 #strike[Rust] 传 _Tuack-NG_][「Expecto _Tuack-NGum_!」]召唤出来的。
+Tuack-NG 不是一句#ruby[呼 #strike[Rust] 护 _Tuack-NG_][「Expecto _Tuack-NGum_!」]召唤出来的。
 
 #figure(caption: [没错，这是 Gemini 生成的], numbering: none)[
   #image("assets/hp.png", height: 60%)
@@ -858,9 +859,6 @@ AST，即*抽象语法树*，是对题面（即 Markdown）的一种结构化表
   fill: gray,
 )[注：与 AST 相关的概念还有具体语法树（CST），它更侧重保留具体语法结构。Tuack-NG 使用的是 AST，感兴趣的可以自行了解 CST。]
 
-#pause
-
-Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
 
 // ---------------------------------------------------------------- 题面 - AST
 // 左 = Markdown 原文，右 = 解析出的 AST；同一种元素一种颜色，不追求对齐
@@ -940,7 +938,7 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   mono("] }"),
 )
 
-== 题面 - AST
+---
 
 #grid(
   columns: (1fr, 1.35fr),
@@ -957,16 +955,216 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   ],
 )
 
+---
+
+Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
+
+#v(6pt)
+#text(size: 13pt)[
+  #diagram(
+    node-stroke: 0.7pt,
+    node-corner-radius: 4pt,
+    node-inset: 5pt,
+    edge-stroke: 1pt,
+    spacing: (40pt, 30pt),
+    {
+      // 题面源、AST 与规则检查
+      node(name: <source>, (0, 0), [题面源])
+
+      node(
+        name: <ast>,
+        (1, 0),
+        [*AST*],
+        stroke: 1.4pt,
+        fill: rgb("#eaf2fb"),
+      )
+
+      node(
+        name: <doc>,
+        (1, -1.5),
+        [`doc check` / `doc format`
+
+          根据规则检查 / 修改 AST],
+        stroke: none,
+        fill: none,
+      )
+
+      // 处理器列表
+      let processors = (
+        (
+          name: <loj>,
+          body: [
+            `loj_table`
+
+            将表格改写成 LOJ 兼容格式
+          ],
+        ),
+        (
+          name: <htm>,
+          body: [
+            `html_table`
+
+            将表格改写为 HTML
+          ],
+        ),
+        (
+          name: <uoj>,
+          body: [
+            `uoj_title`
+
+            UOJ 兼容：每个标题层级加一
+          ],
+        ),
+        (
+          name: <plg>,
+          body: [
+            插件注册的处理器
+
+            任意操作
+          ],
+        ),
+      )
+
+      // 处理器节点围绕 y = 0 对称排列
+      // 步长必须取整数：Fletcher 的网格行距按行算，落在非整数坐标上间距会不匀
+      let proc-step = 1
+      let proc-first-y = (
+        -(
+          (processors.len() - 1) / 2
+        )
+          * proc-step
+      )
+
+      node(
+        (2, proc-first-y - 1),
+        [*处理器*],
+        stroke: none,
+        fill: none,
+      )
+
+      for (i, proc) in processors.enumerate() {
+        let y = (
+          (
+            i - (processors.len() - 1) / 2
+          )
+            * proc-step
+        )
+
+        node(
+          (2, y),
+          proc.body,
+          name: proc.name,
+          fill: rgb("#fdf0f0"),
+          height: 53pt,
+        )
+      }
+
+      // 将所有处理器包进同一个分组
+      node(
+        enclose: (<loj>, <htm>, <uoj>, <plg>),
+        name: <procs>,
+        stroke: 1.2pt + rgb("#e8a4a4"),
+        fill: rgb("#fef7f7"),
+        inset: 10pt,
+      )
+
+      // 处理后的 AST
+      node(
+        name: <ast-m>,
+        (3, 0),
+        [*AST'*],
+        stroke: 1.4pt,
+        fill: rgb("#eaf2fb"),
+      )
+
+      // 打印器列表
+      let printers = (
+        (
+          name: <typst>,
+          body: [typst -> `.typ`],
+        ),
+        (
+          name: <md>,
+          body: [markdown -> `.md`],
+        ),
+        (
+          name: <plug-printer>,
+          body: [插件 -> `.<?>`],
+        ),
+      )
+
+      // 打印器节点围绕 y = 0 对称排列
+      let printer-step = 1
+      let printer-first-y = (
+        -(
+          (printers.len() - 1) / 2
+        )
+          * printer-step
+      )
+
+      node(
+        (4, printer-first-y - 0.6),
+        [*打印器*],
+        stroke: none,
+        fill: none,
+      )
+
+      for (i, printer) in printers.enumerate() {
+        let y = (
+          (
+            i - (printers.len() - 1) / 2
+          )
+            * printer-step
+        )
+
+        node(
+          (4, y),
+          printer.body,
+          name: printer.name,
+          fill: rgb("#eef6ee"),
+          height: 34pt,
+        )
+      }
+
+      // 连线
+      edge(
+        <source.east>,
+        <ast.west>,
+        [`parse()`],
+        "->",
+        label-pos: 0.5,
+      )
+
+      edge(
+        <doc.south>,
+        <ast.north>,
+        "<->",
+        stroke: 0.6pt,
+      )
+
+      edge(<ast.east>, <procs.west>, "->")
+      edge(<procs.east>, <ast-m.west>, "->")
+
+      edge(<ast-m.east>, <typst.west>, "->")
+      edge(<ast-m.east>, <md.west>, "->")
+      edge(<ast-m.east>, <plug-printer.west>, "->")
+    },
+  )
+]
+
 == 未细调
 
 #align(center)[
   #line(length: 55%, stroke: 0.8pt + gray)
   #v(12pt)
   #text(size: 18pt, fill: gray)[以下幻灯片尚未细调]
+
+  #text(size: 18pt, fill: color.red)[可能包括不完整，错误，AI slop 的内容]
+
+  #text(size: 18pt, fill: color.yellow)[请在完成前清空以下内容]
   #v(12pt)
   #line(length: 55%, stroke: 0.8pt + gray)
 ]
-
 
 == 插件
 
