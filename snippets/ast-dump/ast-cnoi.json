@@ -1,0 +1,600 @@
+{
+  "blocks": [
+    {
+      "value": {
+        "kind": "Paragraph",
+        "data": [
+          {
+            "value": {
+              "kind": "Latex",
+              "data": "1 \\leq n \\leq 10^5"
+            },
+            "span": {
+              "start": 0,
+              "stop": 20
+            }
+          },
+          {
+            "value": {
+              "kind": "Text",
+              "data": "，"
+            },
+            "span": {
+              "start": 20,
+              "stop": 23
+            }
+          },
+          {
+            "value": {
+              "kind": "Latex",
+              "data": "r_i \\leq 2"
+            },
+            "span": {
+              "start": 23,
+              "stop": 35
+            }
+          },
+          {
+            "value": {
+              "kind": "Text",
+              "data": "，"
+            },
+            "span": {
+              "start": 35,
+              "stop": 38
+            }
+          },
+          {
+            "value": {
+              "kind": "Latex",
+              "data": "i \\neq j"
+            },
+            "span": {
+              "start": 38,
+              "stop": 48
+            }
+          }
+        ]
+      },
+      "span": {
+        "start": 0,
+        "stop": 38
+      }
+    },
+    {
+      "value": {
+        "kind": "LatexBlock",
+        "data": "\\sum_{i=1}^{n} r_i \\leq 10^{18}\n"
+      },
+      "span": {
+        "start": 50,
+        "stop": 87
+      }
+    },
+    {
+      "value": {
+        "kind": "Table",
+        "data": {
+          "rows": [
+            [
+              {
+                "value": {
+                  "content": [
+                    {
+                      "value": {
+                        "kind": "Text",
+                        "data": "测试点"
+                      },
+                      "span": {
+                        "start": 93,
+                        "stop": 102
+                      }
+                    }
+                  ],
+                  "colspan": null,
+                  "rowspan": null,
+                  "removed_by_extended_table": false
+                },
+                "span": {
+                  "start": 93,
+                  "stop": 102
+                }
+              },
+              {
+                "value": {
+                  "content": [
+                    {
+                      "value": {
+                        "kind": "Latex",
+                        "data": "n"
+                      },
+                      "span": {
+                        "start": 115,
+                        "stop": 118
+                      }
+                    }
+                  ],
+                  "colspan": null,
+                  "rowspan": null,
+                  "removed_by_extended_table": false
+                },
+                "span": {
+                  "start": 115,
+                  "stop": 118
+                }
+              },
+              {
+                "value": {
+                  "content": [
+                    {
+                      "value": {
+                        "kind": "Text",
+                        "data": "分值"
+                      },
+                      "span": {
+                        "start": 121,
+                        "stop": 127
+                      }
+                    }
+                  ],
+                  "colspan": null,
+                  "rowspan": null,
+                  "removed_by_extended_table": false
+                },
+                "span": {
+                  "start": 121,
+                  "stop": 127
+                }
+              }
+            ],
+            [
+              {
+                "value": {
+                  "content": [
+                    {
+                      "value": {
+                        "kind": "Latex",
+                        "data": "1 \\sim 4"
+                      },
+                      "span": {
+                        "start": 168,
+                        "stop": 178
+                      }
+                    }
+                  ],
+                  "colspan": 1,
+                  "rowspan": 2,
+                  "removed_by_extended_table": false
+                },
+                "span": {
+                  "start": 168,
+                  "stop": 178
+                }
+              },
+              {
+                "value": {
+                  "content": [
+                    {
+                      "value": {
+                        "kind": "Latex",
+                        "data": "\\leq 10"
+                      },
+                      "span": {
+                        "start": 183,
+                        "stop": 192
+                      }
+                    }
+                  ],
+                  "colspan": null,
+                  "rowspan": null,
+                  "removed_by_extended_table": false
+                },
+                "span": {
+                  "start": 183,
+                  "stop": 192
+                }
+              },
+              {
+                "value": {
+                  "content": [
+                    {
+                      "value": {
+                        "kind": "Text",
+                        "data": "10"
+                      },
+                      "span": {
+                        "start": 197,
+                        "stop": 199
+                      }
+                    }
+                  ],
+                  "colspan": null,
+                  "rowspan": null,
+                  "removed_by_extended_table": false
+                },
+                "span": {
+                  "start": 197,
+                  "stop": 199
+                }
+              }
+            ],
+            [
+              {
+                "value": {
+                  "content": [
+                    {
+                      "value": {
+                        "kind": "Text",
+                        "data": "^"
+                      },
+                      "span": {
+                        "start": 208,
+                        "stop": 209
+                      }
+                    }
+                  ],
+                  "colspan": null,
+                  "rowspan": null,
+                  "removed_by_extended_table": true
+                },
+                "span": {
+                  "start": 208,
+                  "stop": 209
+                }
+              },
+              {
+                "value": {
+                  "content": [
+                    {
+                      "value": {
+                        "kind": "Latex",
+                        "data": "\\leq 10^5"
+                      },
+                      "span": {
+                        "start": 217,
+                        "stop": 228
+                      }
+                    }
+                  ],
+                  "colspan": null,
+                  "rowspan": null,
+                  "removed_by_extended_table": false
+                },
+                "span": {
+                  "start": 217,
+                  "stop": 228
+                }
+              },
+              {
+                "value": {
+                  "content": [
+                    {
+                      "value": {
+                        "kind": "Text",
+                        "data": "20"
+                      },
+                      "span": {
+                        "start": 233,
+                        "stop": 235
+                      }
+                    }
+                  ],
+                  "colspan": null,
+                  "rowspan": null,
+                  "removed_by_extended_table": false
+                },
+                "span": {
+                  "start": 233,
+                  "stop": 235
+                }
+              }
+            ],
+            [
+              {
+                "value": {
+                  "content": [
+                    {
+                      "value": {
+                        "kind": "Text",
+                        "data": "合计"
+                      },
+                      "span": {
+                        "start": 243,
+                        "stop": 249
+                      }
+                    }
+                  ],
+                  "colspan": 2,
+                  "rowspan": null,
+                  "removed_by_extended_table": false
+                },
+                "span": {
+                  "start": 243,
+                  "stop": 249
+                }
+              },
+              {
+                "value": {
+                  "content": [
+                    {
+                      "value": {
+                        "kind": "Text",
+                        "data": "<"
+                      },
+                      "span": {
+                        "start": 265,
+                        "stop": 266
+                      }
+                    }
+                  ],
+                  "colspan": null,
+                  "rowspan": null,
+                  "removed_by_extended_table": true
+                },
+                "span": {
+                  "start": 265,
+                  "stop": 266
+                }
+              },
+              {
+                "value": {
+                  "content": [
+                    {
+                      "value": {
+                        "kind": "Text",
+                        "data": "30"
+                      },
+                      "span": {
+                        "start": 271,
+                        "stop": 273
+                      }
+                    }
+                  ],
+                  "colspan": null,
+                  "rowspan": null,
+                  "removed_by_extended_table": false
+                },
+                "span": {
+                  "start": 271,
+                  "stop": 273
+                }
+              }
+            ]
+          ],
+          "alignments": [
+            "Center",
+            "Right",
+            "Right"
+          ]
+        }
+      },
+      "span": {
+        "start": 89,
+        "stop": 273
+      }
+    },
+    {
+      "value": {
+        "kind": "Paragraph",
+        "data": [
+          {
+            "value": {
+              "kind": "Image",
+              "data": {
+                "destination": "img/demo.png",
+                "title": null,
+                "alt": "示例图片",
+                "attr": {
+                  "width": "40%",
+                  "height": null
+                }
+              }
+            },
+            "span": null
+          }
+        ]
+      },
+      "span": {
+        "start": 277,
+        "stop": 306
+      }
+    },
+    {
+      "value": {
+        "kind": "Container",
+        "data": {
+          "kind": "figure",
+          "params": [
+            {
+              "kind": "KeyValue",
+              "data": [
+                "caption",
+                "看我！"
+              ]
+            }
+          ],
+          "blocks": [
+            {
+              "value": {
+                "kind": "Paragraph",
+                "data": [
+                  {
+                    "value": {
+                      "kind": "Text",
+                      "data": "这是"
+                    },
+                    "span": {
+                      "start": 350,
+                      "stop": 356
+                    }
+                  },
+                  {
+                    "value": {
+                      "kind": "Emphasis",
+                      "data": [
+                        {
+                          "value": {
+                            "kind": "Text",
+                            "data": "居中"
+                          },
+                          "span": {
+                            "start": 357,
+                            "stop": 363
+                          }
+                        }
+                      ]
+                    },
+                    "span": null
+                  },
+                  {
+                    "value": {
+                      "kind": "Text",
+                      "data": "文字！"
+                    },
+                    "span": {
+                      "start": 364,
+                      "stop": 373
+                    }
+                  }
+                ]
+              },
+              "span": {
+                "start": 350,
+                "stop": 373
+              }
+            }
+          ]
+        }
+      },
+      "span": {
+        "start": 319,
+        "stop": 373
+      }
+    },
+    {
+      "value": {
+        "kind": "Paragraph",
+        "data": [
+          {
+            "value": {
+              "kind": "Text",
+              "data": "这里是脚注引用"
+            },
+            "span": {
+              "start": 379,
+              "stop": 400
+            }
+          },
+          {
+            "value": {
+              "kind": "FootnoteReference",
+              "data": "1"
+            },
+            "span": {
+              "start": 400,
+              "stop": 404
+            }
+          },
+          {
+            "value": {
+              "kind": "Text",
+              "data": "，正文继续。"
+            },
+            "span": {
+              "start": 404,
+              "stop": 422
+            }
+          }
+        ]
+      },
+      "span": {
+        "start": 379,
+        "stop": 422
+      }
+    },
+    {
+      "value": {
+        "kind": "FootnoteDefinition",
+        "data": {
+          "label": "1",
+          "blocks": [
+            {
+              "value": {
+                "kind": "Paragraph",
+                "data": [
+                  {
+                    "value": {
+                      "kind": "Text",
+                      "data": "这是脚注内容。"
+                    },
+                    "span": {
+                      "start": 430,
+                      "stop": 451
+                    }
+                  }
+                ]
+              },
+              "span": {
+                "start": 430,
+                "stop": 451
+              }
+            }
+          ]
+        }
+      },
+      "span": {
+        "start": 424,
+        "stop": 451
+      }
+    },
+    {
+      "value": {
+        "kind": "Paragraph",
+        "data": [
+          {
+            "value": {
+              "kind": "Strikethrough",
+              "data": [
+                {
+                  "value": {
+                    "kind": "Text",
+                    "data": "删除线"
+                  },
+                  "span": {
+                    "start": 455,
+                    "stop": 464
+                  }
+                }
+              ]
+            },
+            "span": null
+          },
+          {
+            "value": {
+              "kind": "Text",
+              "data": "、自动链接 "
+            },
+            "span": {
+              "start": 466,
+              "stop": 482
+            }
+          },
+          {
+            "value": {
+              "kind": "Autolink",
+              "data": {
+                "url": "https://cnoi.mrpython.top",
+                "text": "<https://cnoi.mrpython.top>"
+              }
+            },
+            "span": null
+          }
+        ]
+      },
+      "span": {
+        "start": 453,
+        "stop": 508
+      }
+    }
+  ]
+}

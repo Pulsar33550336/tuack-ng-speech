@@ -1,0 +1,51 @@
+Document { blocks: [
+    Paragraph([
+        Latex("1 \\leq n \\leq 10^5"),
+        Text("，"),
+        Latex("r_i \\leq 2"),
+        Text("，"),
+        Latex("i \\neq j"),
+    ]),
+    LatexBlock("\\sum_{i=1}^{n} r_i \\leq 10^{18}\n"),
+    Paragraph([
+        Image(Image {
+            destination: "img/demo.png",
+            title: None,
+            alt: "示例图片",
+            attr: Some(ImageAttributes {
+                width: Some("40%"),
+                height: None,
+            }),
+        })
+    ]),
+    Container( Container {
+        kind: "figure",
+        params: [KeyValue("caption", "看我！")],
+        blocks: [
+            Paragraph(
+                [Text("这是"), Emphasis([Text("居中")]), Text("文字！")],
+            ),
+        ],
+    } ),
+    Paragraph(
+        [Text("这里是脚注引用"), FootnoteReference("1"), Text("，正文继续。")],
+    ),
+    FootnoteDefinition(
+        FootnoteDefinition {
+            label: "1",
+            blocks: [Paragraph([Text("这是脚注内容。")])],
+        },
+    ),
+    Paragraph(
+        [
+            Strikethrough([Text("删除线")]),
+            Text("、自动链接 "),
+            Autolink(
+                Autolink {
+                    url: "https://cnoi.mrpython.top",
+                    text: "<https://cnoi.mrpython.top>",
+                },
+            ),
+        ],
+    ),
+] }

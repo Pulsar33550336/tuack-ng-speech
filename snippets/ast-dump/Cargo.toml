@@ -1,0 +1,8 @@
+[package]
+name = "ast-dump"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tuack-ng-parser = { path = "/home/Pulsar/Projects/tuack-ng/crates/tuack-ng-parser", features = ["serde"] }
+serde_json = "1"

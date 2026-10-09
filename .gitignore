@@ -7,6 +7,9 @@
 # 临时工程（渲染试验用）
 .tmp*/
 
+# Rust 构建产物（snippets/ast-dump 用）
+target/
+
 # 编辑器 / 系统
 .DS_Store
 *.swp

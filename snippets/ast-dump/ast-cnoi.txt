@@ -1,0 +1,635 @@
+Document {
+blocks: [
+        Spanned {
+            value: Paragraph(
+                [
+                    Spanned {
+                        value: Latex("1 \\leq n \\leq 10^5"),
+                        span: Some(Span { start: 0, stop: 20 }),
+                    },
+                    Spanned {
+                        value: Text("，"),
+                        span: Some(Span { start: 20, stop: 23 }),
+                    },
+                    Spanned {
+                        value: Latex("r_i \\leq 2"),
+                        span: Some(Span { start: 23, stop: 35 }),
+                    },
+                    Spanned {
+                        value: Text("，"),
+                        span: Some(Span { start: 35, stop: 38 }),
+                    },
+                    Spanned {
+                        value: Latex(
+                            "i \\neq j",
+                        ),
+                        span: Some(
+                            Span {
+                                start: 38,
+                                stop: 48,
+                            },
+                        ),
+                    },
+                ],
+            ),
+            span: Some(
+                Span {
+                    start: 0,
+                    stop: 38,
+                },
+            ),
+        },
+        Spanned {
+            value: LatexBlock(
+                "\\sum_{i=1}^{n} r_i \\leq 10^{18}\n",
+            ),
+            span: Some(
+                Span {
+                    start: 50,
+                    stop: 87,
+                },
+            ),
+        },
+        Spanned {
+            value: Table(
+                Table {
+                    rows: [
+                        [
+                            Spanned {
+                                value: TableCellKind {
+                                    content: [
+                                        Spanned {
+                                            value: Text(
+                                                "测试点",
+                                            ),
+                                            span: Some(
+                                                Span {
+                                                    start: 93,
+                                                    stop: 102,
+                                                },
+                                            ),
+                                        },
+                                    ],
+                                    colspan: None,
+                                    rowspan: None,
+                                    removed_by_extended_table: false,
+                                },
+                                span: Some(
+                                    Span {
+                                        start: 93,
+                                        stop: 102,
+                                    },
+                                ),
+                            },
+                            Spanned {
+                                value: TableCellKind {
+                                    content: [
+                                        Spanned {
+                                            value: Latex(
+                                                "n",
+                                            ),
+                                            span: Some(
+                                                Span {
+                                                    start: 115,
+                                                    stop: 118,
+                                                },
+                                            ),
+                                        },
+                                    ],
+                                    colspan: None,
+                                    rowspan: None,
+                                    removed_by_extended_table: false,
+                                },
+                                span: Some(
+                                    Span {
+                                        start: 115,
+                                        stop: 118,
+                                    },
+                                ),
+                            },
+                            Spanned {
+                                value: TableCellKind {
+                                    content: [
+                                        Spanned {
+                                            value: Text(
+                                                "分值",
+                                            ),
+                                            span: Some(
+                                                Span {
+                                                    start: 121,
+                                                    stop: 127,
+                                                },
+                                            ),
+                                        },
+                                    ],
+                                    colspan: None,
+                                    rowspan: None,
+                                    removed_by_extended_table: false,
+                                },
+                                span: Some(
+                                    Span {
+                                        start: 121,
+                                        stop: 127,
+                                    },
+                                ),
+                            },
+                        ],
+                        [
+                            Spanned {
+                                value: TableCellKind {
+                                    content: [
+                                        Spanned {
+                                            value: Latex(
+                                                "1 \\sim 4",
+                                            ),
+                                            span: Some(
+                                                Span {
+                                                    start: 168,
+                                                    stop: 178,
+                                                },
+                                            ),
+                                        },
+                                    ],
+                                    colspan: Some(
+                                        1,
+                                    ),
+                                    rowspan: Some(
+                                        2,
+                                    ),
+                                    removed_by_extended_table: false,
+                                },
+                                span: Some(
+                                    Span {
+                                        start: 168,
+                                        stop: 178,
+                                    },
+                                ),
+                            },
+                            Spanned {
+                                value: TableCellKind {
+                                    content: [
+                                        Spanned {
+                                            value: Latex(
+                                                "\\leq 10",
+                                            ),
+                                            span: Some(
+                                                Span {
+                                                    start: 183,
+                                                    stop: 192,
+                                                },
+                                            ),
+                                        },
+                                    ],
+                                    colspan: None,
+                                    rowspan: None,
+                                    removed_by_extended_table: false,
+                                },
+                                span: Some(
+                                    Span {
+                                        start: 183,
+                                        stop: 192,
+                                    },
+                                ),
+                            },
+                            Spanned {
+                                value: TableCellKind {
+                                    content: [
+                                        Spanned {
+                                            value: Text(
+                                                "10",
+                                            ),
+                                            span: Some(
+                                                Span {
+                                                    start: 197,
+                                                    stop: 199,
+                                                },
+                                            ),
+                                        },
+                                    ],
+                                    colspan: None,
+                                    rowspan: None,
+                                    removed_by_extended_table: false,
+                                },
+                                span: Some(
+                                    Span {
+                                        start: 197,
+                                        stop: 199,
+                                    },
+                                ),
+                            },
+                        ],
+                        [
+                            Spanned {
+                                value: TableCellKind {
+                                    content: [
+                                        Spanned {
+                                            value: Text(
+                                                "^",
+                                            ),
+                                            span: Some(
+                                                Span {
+                                                    start: 208,
+                                                    stop: 209,
+                                                },
+                                            ),
+                                        },
+                                    ],
+                                    colspan: None,
+                                    rowspan: None,
+                                    removed_by_extended_table: true,
+                                },
+                                span: Some(
+                                    Span {
+                                        start: 208,
+                                        stop: 209,
+                                    },
+                                ),
+                            },
+                            Spanned {
+                                value: TableCellKind {
+                                    content: [
+                                        Spanned {
+                                            value: Latex(
+                                                "\\leq 10^5",
+                                            ),
+                                            span: Some(
+                                                Span {
+                                                    start: 217,
+                                                    stop: 228,
+                                                },
+                                            ),
+                                        },
+                                    ],
+                                    colspan: None,
+                                    rowspan: None,
+                                    removed_by_extended_table: false,
+                                },
+                                span: Some(
+                                    Span {
+                                        start: 217,
+                                        stop: 228,
+                                    },
+                                ),
+                            },
+                            Spanned {
+                                value: TableCellKind {
+                                    content: [
+                                        Spanned {
+                                            value: Text(
+                                                "20",
+                                            ),
+                                            span: Some(
+                                                Span {
+                                                    start: 233,
+                                                    stop: 235,
+                                                },
+                                            ),
+                                        },
+                                    ],
+                                    colspan: None,
+                                    rowspan: None,
+                                    removed_by_extended_table: false,
+                                },
+                                span: Some(
+                                    Span {
+                                        start: 233,
+                                        stop: 235,
+                                    },
+                                ),
+                            },
+                        ],
+                        [
+                            Spanned {
+                                value: TableCellKind {
+                                    content: [
+                                        Spanned {
+                                            value: Text(
+                                                "合计",
+                                            ),
+                                            span: Some(
+                                                Span {
+                                                    start: 243,
+                                                    stop: 249,
+                                                },
+                                            ),
+                                        },
+                                    ],
+                                    colspan: Some(
+                                        2,
+                                    ),
+                                    rowspan: None,
+                                    removed_by_extended_table: false,
+                                },
+                                span: Some(
+                                    Span {
+                                        start: 243,
+                                        stop: 249,
+                                    },
+                                ),
+                            },
+                            Spanned {
+                                value: TableCellKind {
+                                    content: [
+                                        Spanned {
+                                            value: Text(
+                                                "<",
+                                            ),
+                                            span: Some(
+                                                Span {
+                                                    start: 265,
+                                                    stop: 266,
+                                                },
+                                            ),
+                                        },
+                                    ],
+                                    colspan: None,
+                                    rowspan: None,
+                                    removed_by_extended_table: true,
+                                },
+                                span: Some(
+                                    Span {
+                                        start: 265,
+                                        stop: 266,
+                                    },
+                                ),
+                            },
+                            Spanned {
+                                value: TableCellKind {
+                                    content: [
+                                        Spanned {
+                                            value: Text(
+                                                "30",
+                                            ),
+                                            span: Some(
+                                                Span {
+                                                    start: 271,
+                                                    stop: 273,
+                                                },
+                                            ),
+                                        },
+                                    ],
+                                    colspan: None,
+                                    rowspan: None,
+                                    removed_by_extended_table: false,
+                                },
+                                span: Some(
+                                    Span {
+                                        start: 271,
+                                        stop: 273,
+                                    },
+                                ),
+                            },
+                        ],
+                    ],
+                    alignments: [
+                        Center,
+                        Right,
+                        Right,
+                    ],
+                },
+            ),
+            span: Some(
+                Span {
+                    start: 89,
+                    stop: 273,
+                },
+            ),
+        },
+        Spanned {
+            value: Paragraph(
+                [
+                    Spanned {
+                        value: Image(
+                            Image {
+                                destination: "img/demo.png",
+                                title: None,
+                                alt: "示例图片",
+                                attr: Some(
+                                    ImageAttributes {
+                                        width: Some(
+                                            "40%",
+                                        ),
+                                        height: None,
+                                    },
+                                ),
+                            },
+                        ),
+                        span: None,
+                    },
+                ],
+            ),
+            span: Some(
+                Span {
+                    start: 277,
+                    stop: 306,
+                },
+            ),
+        },
+        Spanned {
+            value: Container(
+                Container {
+                    kind: "figure",
+                    params: [
+                        KeyValue(
+                            "caption",
+                            "看我！",
+                        ),
+                    ],
+                    blocks: [
+                        Spanned {
+                            value: Paragraph(
+                                [
+                                    Spanned {
+                                        value: Text(
+                                            "这是",
+                                        ),
+                                        span: Some(
+                                            Span {
+                                                start: 350,
+                                                stop: 356,
+                                            },
+                                        ),
+                                    },
+                                    Spanned {
+                                        value: Emphasis(
+                                            [
+                                                Spanned {
+                                                    value: Text(
+                                                        "居中",
+                                                    ),
+                                                    span: Some(
+                                                        Span {
+                                                            start: 357,
+                                                            stop: 363,
+                                                        },
+                                                    ),
+                                                },
+                                            ],
+                                        ),
+                                        span: None,
+                                    },
+                                    Spanned {
+                                        value: Text(
+                                            "文字！",
+                                        ),
+                                        span: Some(
+                                            Span {
+                                                start: 364,
+                                                stop: 373,
+                                            },
+                                        ),
+                                    },
+                                ],
+                            ),
+                            span: Some(
+                                Span {
+                                    start: 350,
+                                    stop: 373,
+                                },
+                            ),
+                        },
+                    ],
+                },
+            ),
+            span: Some(
+                Span {
+                    start: 319,
+                    stop: 373,
+                },
+            ),
+        },
+        Spanned {
+            value: Paragraph(
+                [
+                    Spanned {
+                        value: Text(
+                            "这里是脚注引用",
+                        ),
+                        span: Some(
+                            Span {
+                                start: 379,
+                                stop: 400,
+                            },
+                        ),
+                    },
+                    Spanned {
+                        value: FootnoteReference(
+                            "1",
+                        ),
+                        span: Some(
+                            Span {
+                                start: 400,
+                                stop: 404,
+                            },
+                        ),
+                    },
+                    Spanned {
+                        value: Text(
+                            "，正文继续。",
+                        ),
+                        span: Some(
+                            Span {
+                                start: 404,
+                                stop: 422,
+                            },
+                        ),
+                    },
+                ],
+            ),
+            span: Some(
+                Span {
+                    start: 379,
+                    stop: 422,
+                },
+            ),
+        },
+        Spanned {
+            value: FootnoteDefinition(
+                FootnoteDefinition {
+                    label: "1",
+                    blocks: [
+                        Spanned {
+                            value: Paragraph(
+                                [
+                                    Spanned {
+                                        value: Text(
+                                            "这是脚注内容。",
+                                        ),
+                                        span: Some(
+                                            Span {
+                                                start: 430,
+                                                stop: 451,
+                                            },
+                                        ),
+                                    },
+                                ],
+                            ),
+                            span: Some(
+                                Span {
+                                    start: 430,
+                                    stop: 451,
+                                },
+                            ),
+                        },
+                    ],
+                },
+            ),
+            span: Some(
+                Span {
+                    start: 424,
+                    stop: 451,
+                },
+            ),
+        },
+        Spanned {
+            value: Paragraph(
+                [
+                    Spanned {
+                        value: Strikethrough(
+                            [
+                                Spanned {
+                                    value: Text(
+                                        "删除线",
+                                    ),
+                                    span: Some(
+                                        Span {
+                                            start: 455,
+                                            stop: 464,
+                                        },
+                                    ),
+                                },
+                            ],
+                        ),
+                        span: None,
+                    },
+                    Spanned {
+                        value: Text(
+                            "、自动链接 ",
+                        ),
+                        span: Some(
+                            Span {
+                                start: 466,
+                                stop: 482,
+                            },
+                        ),
+                    },
+                    Spanned {
+                        value: Autolink(
+                            Autolink {
+                                url: "https://cnoi.mrpython.top",
+                                text: "<https://cnoi.mrpython.top>",
+                            },
+                        ),
+                        span: None,
+                    },
+                ],
+            ),
+            span: Some(
+                Span {
+                    start: 453,
+                    stop: 508,
+                },
+            ),
+        },
+    ],
+}

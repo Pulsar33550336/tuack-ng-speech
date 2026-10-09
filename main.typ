@@ -193,10 +193,10 @@ Tuack-NG 使用 Markdown 编写题面，并且支持*所有 CNOI 语法*。
 #let MCODE = 9pt
 #let MLH = 10pt
 #let mono(s, size: MCODE) = text(font: "Maple Mono Normal NL NF", size: size, s)
-#let band(c, s, size: MCODE, lh: MLH) = box(
+#let band(c, s, size: MCODE, lh: MLH, inset: (x: 0.3em), radius: 0.3em) = box(
   fill: c,
-  inset: (x: 0.3em),
-  radius: 0.3em,
+  inset: inset,
+  radius: radius,
   height: 1.02 * lh,
   align(horizon, mono(s, size: size)),
 )
@@ -206,6 +206,16 @@ Tuack-NG 使用 Markdown 编写题面，并且支持*所有 CNOI 语法*。
 #let m4 = rgb("#f7a8c4") // output_file
 #let m5 = rgb("#c3aaf0") // sample.text
 #let m6 = rgb("#7fd4cf") // sample.file
+#let m7 = rgb("#ffcf9c") // 题面 - AST：Container
+#let m8 = rgb("#cfe8a9") // 题面 - AST：caption
+#let m9 = rgb("#d9c2f0") // 题面 - AST：Emphasis
+
+// m10 起是备用色，随便取用；要调色直接改这里
+#let m10 = rgb("#e8a4a4") // 红
+#let m11 = rgb("#a8c4e0") // 钢蓝（比 m1 深）
+#let m12 = rgb("#d8c48c") // 沙金
+#let m13 = rgb("#9fd0b8") // 薄荷（比 m6 深）
+#let m14 = rgb("#c0a8d8") // 紫（比 m5 深）
 
 // 代码面板外观（模板系统 / 外置表格 / Markdown 导出共用）
 #let panel(body, inset: (x: 10pt, y: 4pt)) = block(
@@ -814,5 +824,267 @@ Tuack-NG 帮你导出到评测平台。
     ]
     #v(8pt)
     在比赛日或比赛层级执行，一次改掉下面所有题目。
+  ],
+)
+
+= 开发细节
+
+== 题面 - 一切皆 AST
+
+什么是 AST？#strike[能吃吗？]
+
+#pause
+
+AST，即*抽象语法树*，是对题面（即 Markdown）的一种结构化表示，它把文本里的语法元素变成具有类型、字段和嵌套关系的节点，方便 Tuack-NG 继续处理。
+
+#text(
+  fill: gray,
+)[注：与 AST 相关的概念还有具体语法树（CST），它更侧重保留具体语法结构。Tuack-NG 使用的是 AST，感兴趣的可以自行了解 CST。]
+
+#pause
+
+Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
+
+// ---------------------------------------------------------------- 题面 - AST
+// 左 = Markdown 原文，右 = 解析出的 AST；同一种元素一种颜色，不追求对齐
+// 左栏字号固定 11pt，调用处不再逐个写 size / lh
+#let src-hi(c, s) = band(c, s, size: 11pt, lh: 14pt)
+#let src-tx(s) = mono(s, size: 11pt)
+
+#let m-md = (
+  src-hi(m1, "$1 \\leq n \\leq 10^5$") + src-hi(m10, "，") + src-hi(m1, "$r_i \\leq 2$"),
+  [],
+  src-hi(m2, "$$"),
+  src-hi(m2, "\\sum_{i=1}^{n} r_i \\leq 10^{18}"),
+  src-hi(m2, "$$"),
+  [],
+  src-hi(m3, "![")
+    + src-hi(m4, "示例图片")
+    + src-hi(m3, "](")
+    + src-hi(m5, "img/demo.png")
+    + src-hi(m3, ")")
+    + src-hi(m11, "{")
+    + src-hi(m6, "width=40%")
+    + src-hi(m11, "}"),
+  [],
+  src-hi(m7, ":::") + src-hi(m14, "figure") + src-hi(m13, "{") + src-hi(m8, "caption=\"看我！\"") + src-hi(m13, "}"),
+  src-hi(m10, "这是") + src-hi(m12, "*居中*") + src-hi(m10, "文字！"),
+  src-hi(m7, ":::"),
+)
+
+// 右栏：公共基础缩进（不上色）+ 每个嵌套层 3 空格，用该层节点的颜色
+// 每深一层 4 格：该层父节点有颜色就用色条，没有就留空格（none）
+// 色条圆角、无左右内边距
+#let gut(..cs) = (
+  mono("    ")
+    + cs
+      .pos()
+      .map(c => if c == none {
+        mono("    ")
+      } else {
+        band(c, "    ", inset: 0pt, radius: 0.25em)
+      })
+      .join()
+)
+
+#let m-ast = (
+  mono("Document { blocks: ["),
+  gut() + mono("Paragraph(["),
+  gut(none) + band(m1, "Latex(\"1 \\\\leq n \\\\leq 10^5\"),"),
+  gut(none) + band(m10, "Text(\"，\"),"),
+  gut(none) + band(m1, "Latex(\"r_i \\\\leq 2\")"),
+  gut() + mono("]),"),
+  gut() + band(m2, "LatexBlock(\"\\\\sum_{i=1}^{n} r_i \\\\leq 10^{18}\\n\"),"),
+  gut() + mono("Paragraph(["),
+  gut(none) + band(m3, "Image(Image {"),
+  gut(none, m3) + band(m5, "destination: \"img/demo.png\","),
+  gut(none, m3) + band(m3, "title: None,"),
+  gut(none, m3) + band(m4, "alt: \"示例图片\","),
+  gut(none, m3) + band(m11, "attr: Some(ImageAttributes {"),
+  gut(none, m3, m11) + band(m6, "width: Some(\"40%\"),"),
+  gut(none, m3, m11) + band(m11, "height: None,"),
+  gut(none, m3) + band(m11, "}),"),
+  gut(none) + band(m3, "}),"),
+  gut() + mono("]),"),
+  gut() + band(m7, "Container(Container {"),
+  gut(m7) + band(m7, "kind: ") + band(m14, "\"figure\","),
+  gut(m7) + band(m13, "params: [") + band(m8, "KeyValue(\"caption\", \"看我！\")") + band(m13, "],"),
+  gut(m7) + band(m7, "blocks: ["),
+  gut(m7, m7) + mono("Paragraph(["),
+  gut(m7, m7, none)
+    + band(m10, "Text(\"这是\")")
+    + mono(", ")
+    + band(m12, "Emphasis([Text(\"居中\")])")
+    + mono(", ")
+    + band(m10, "Text(\"文字！\"),"),
+  gut(m7, m7) + mono("]),"),
+  gut(m7) + band(m7, "],"),
+  gut() + band(m7, "}),"),
+  mono("] }"),
+)
+
+== 题面 - AST
+
+#grid(
+  columns: (1fr, 1.35fr),
+  column-gutter: 20pt,
+  align: top,
+  [
+    #align(center)[原文]
+    #mcol(m-md, size: 11pt, lh: 14pt)
+    #text(fill: gray, size: 14pt)[为了在 PPT 内放下，AST 中的 Span 信息被删除了，不过这不影响理解。]
+  ],
+  [
+    #align(center)[AST]
+    #mcol(m-ast)
+  ],
+)
+
+== 未细调
+
+#align(center)[
+  #line(length: 55%, stroke: 0.8pt + gray)
+  #v(12pt)
+  #text(size: 18pt, fill: gray)[以下幻灯片尚未细调]
+  #v(12pt)
+  #line(length: 55%, stroke: 0.8pt + gray)
+]
+
+
+== 插件
+
+插件用来扩展 Tuack-NG 的渲染、导出和题面能力。装好之后，它和内置目标用法一样：在 `ren` / `dump` 里直接写名字。
+
+#grid(
+  columns: (1.05fr, 1fr),
+  column-gutter: 20pt,
+  align: top,
+  [
+    #text(size: 15pt, weight: "bold")[插件能加什么]
+    #v(4pt)
+    #code(size: 12pt)[
+      ```txt
+      渲染目标    tuack-ng ren <名字>
+      导出目标    tuack-ng dump <名字>
+      命令        新的子命令
+      资源        模板、字体
+      ```
+    ]
+    #v(6pt)
+    `ren --list` 和 `dump --list` 列出当前全部可用名字，内置的和插件的都在里面。
+  ],
+  [
+    #text(size: 15pt, weight: "bold")[怎么装]
+    #v(4pt)
+    #code(size: 12pt)[
+      ```txt
+      tuack-ng plugin market install <name>
+      tuack-ng plugin list
+      tuack-ng plugin trust <name>
+      ```
+    ]
+    #v(6pt)
+    市场在 `tuack-ng/tuack-ng-plugins`。刚装上是未信任状态，不加载；更新后取消信任，需要重新确认。
+  ],
+)
+
+== 架构
+
+源码分四块。插件能挂进流程，是因为插件和内置实现用的是同一套 trait。
+
+#grid(
+  columns: (1fr, 1.45fr),
+  column-gutter: 20pt,
+  align: top,
+  [
+    #code(size: 12pt)[
+      ```txt
+      tuack-ng          命令行
+      tuack-lib         契约：类型与 trait
+      tuack-utils       内置实现：导出器、渲染
+      tuack-plugin-sdk  插件作者的 SDK
+      ```
+    ]
+  ],
+  [
+    #code(size: 12pt)[
+      ```rust
+      // tuack-plugin-sdk 里的渲染器契约
+      pub trait Renderer: Send + Sync {
+          fn new() -> Self where Self: Sized;
+          fn render(&self, doc: RenderDocument)
+              -> Result<(PathBuf, Vec<OutputFile>), Error>;
+      }
+
+      // 实现 trait，再调一个宏注册成 extism 导出函数
+      renderer!(MyRenderer);
+      ```
+    ]
+  ],
+)
+
+
+== 前后端分离
+
+题面源和输出目标分开，导出是同一套路。前端只管写出内容，后端决定它长什么样。
+
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 20pt,
+  align: top,
+  [
+    #text(size: 15pt, weight: "bold")[题面]
+    #v(4pt)
+    #code(size: 12pt)[
+      ```txt
+      一份 statement.md
+            ↓
+      NOI ／ CCPC ／ Markdown
+      ```
+    ]
+    #v(6pt)
+    换目标不用动题面。前面那页三种渲染结果就是从同一份源出来的，因为中间那棵 AST 是共用的。
+  ],
+  [
+    #text(size: 15pt, weight: "bold")[导出]
+    #v(4pt)
+    #code(size: 12pt)[
+      ```txt
+      一份 conf.json
+            ↓
+      Lemon ／ Arbiter ／ CCR-Plus
+      ```
+    ]
+    #v(6pt)
+    打印器、导出器都是可插拔的后端，插件挂的就是这里；一个后端出问题，不影响别的目标。
+  ],
+)
+
+== 插件 - WASM
+
+插件编译成 WASM 模块，宿主用 Extism 加载。
+
+#grid(
+  columns: (1.15fr, 1fr),
+  column-gutter: 20pt,
+  align: top,
+  [
+    #text(size: 15pt, weight: "bold")[边界只走数据]
+    #v(4pt)
+    #code(size: 12pt)[
+      ```txt
+      宿主 (tuack-ng)                插件 (wasm)
+
+        render(RenderDocument)  ──▶
+        ◀── 主产物路径 + OutputFile 列表
+      ```
+    ]
+    #v(6pt)
+    跨 extism 边界只传可序列化的数据与可恢复的错误；`Renderer`、`Dumper` 这些 host 侧 trait 留在各自模块，不出门。
+  ],
+  [
+    #text(size: 15pt, weight: "bold")[大文件不进 WASM]
+    #v(4pt)
+    插件声明 `wasi` 时，宿主把临时目录挂成插件里的 `/`，产物落在 `/out`。数据文件不走 WASM，由宿主两边直接对接——几十 MB 的 `1.in` 不会被塞进插件内存。
   ],
 )
