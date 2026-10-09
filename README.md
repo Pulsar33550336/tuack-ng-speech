@@ -34,8 +34,11 @@ Typst 包，首次编译会自动下载：`xwysyy:0.4.0`、`cuti:0.4.0`、`fletc
 | 代码：`main.typ`、`assets/**/*.typ`、`tools/**` | [MIT](LICENSE-MIT)                   |
 | 幻灯片内容：正文文字与图片                      | [CC BY-SA 4.0](LICENSE-CC-BY-SA-4.0) |
 
+由本项目或系列项目生成的文字与图片按 CC 授权，其余素材参考各自协议。
+
 ## 第三方
 
+- 题面渲染截图中的 NOIP 题面来自 CCF，以 CC BY-NC 授权（`assets/功能一览/题面-渲染/cover-noi-top.png`）。
 - `assets/开发细节/插件-WASM/sdk-plugin.rs` 摘自示例插件仓库 `tuack-ng-plugin-example`，
   以 MIT 授权，Copyright (c) 2026 Tuack-NG Developers。
 - 字体各自适用 SIL Open Font License 1.1；本仓库不随附字体文件（`main.pdf` 中按 OFL 允许的方式嵌入）。
