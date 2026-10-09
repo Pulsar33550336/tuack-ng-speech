@@ -680,10 +680,10 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
             column-gutter: 12pt,
             row-gutter: 8pt,
             align: horizon,
-            [#image("assets/致谢-查看更多/qr-tuack-ng.png", height: 58pt)],
+            [#image("assets/致谢-查看更多/qr-tuack-ng.png", height: 50pt)],
             [*项目仓库*\ #text(size: 13pt)[`github.com/tuackng/tuack-ng`]],
 
-            [#image("assets/致谢-查看更多/qr-gui.png", height: 58pt)],
+            [#image("assets/致谢-查看更多/qr-gui.png", height: 50pt)],
             [*Tuack-GUI*\ #text(size: 13pt)[`github.com/tuackng/Tuack-GUI`]],
           )],
           [#grid(
@@ -691,10 +691,10 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
             column-gutter: 12pt,
             row-gutter: 8pt,
             align: horizon,
-            [#image("assets/致谢-查看更多/qr-home.png", height: 58pt)],
+            [#image("assets/致谢-查看更多/qr-home.png", height: 50pt)],
             [*官网（文档）*\ #text(size: 13pt)[`tuack-ng.ink`]],
 
-            [#image("assets/致谢-查看更多/qr-vscode.png", height: 58pt)],
+            [#image("assets/致谢-查看更多/qr-vscode.png", height: 50pt)],
             [*Tuack for VS Code*\ #text(size: 13pt)[`github.com/Qaaxaap/tuack-vscode`]],
           )],
         )
@@ -707,6 +707,15 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
 
         本幻灯片的演讲文本（包括图片）以 CC BY-SA 4.0 授权；\
         代码（包括内联在 Typst 源文件的）以 MIT 授权。
+
+        #v(-10pt)
+        #grid(
+          columns: (auto, 1fr),
+          column-gutter: 10pt,
+          align: horizon,
+          [#image("assets/致谢-查看更多/qr-speech.png", height: 50pt)],
+          [*幻灯片源码仓库*\ #text(size: 13pt)[`github.com/Pulsar33550336/tuack-ng-speech`]],
+        )
 
       ],
     )
