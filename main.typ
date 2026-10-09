@@ -502,68 +502,47 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
 
 == 前后端分离
 
-这里的「前端／后端」不是 Web 那套。前端是*命令行与交互*，后端是*纯业务逻辑库*。
+每个功能都先有一个*抽象*，再让不同的东西去实现它。上层只认这几张脸。
+
+#v(4pt)
+#grid(
+  columns: (auto, 1fr),
+  column-gutter: 16pt,
+  row-gutter: 6pt,
+  align: (left, left),
+  [#mono("Document")],        [题面的中间表示：解析器的产物，后面所有工序都吃它],
+  [#mono("Generator")],       [造数据：参数 + 种子 -> 字节流，往标准输出吐],
+  [#mono("Validator")],       [校验输入文件：合不合法，一句话],
+  [#mono("Runner")],          [编译与运行：超时超内存由它盯着（全项目唯一用异步的地方）],
+  [#mono("Data")],            [一个测试点的搬运：输入、答案、参数],
+  [#mono("RenProcessor")],    [题面改写：按目标平台改方言，进出都是 AST],
+  [#mono("Renderer")],        [渲染：一份文档 -> 主产物 + 全部产物文件],
+  [#mono("Dumper")],          [导出：与渲染同构，产物换成评测平台的目录结构],
+  [#mono("AssetProvider")],   [资源注入：题号 + 逻辑路径 -> 字节流，惰性取用],
+)
+
+#v(6pt)
+这些名字全部定义在一个不依赖任何实现的地方，所以谁来填都行。
+
+---
+
+== 前后端分离 - 谁来实现
 
 #v(2pt)
 #include("assets/开发细节/前后端分离/layers.typ")
 
 #v(8pt)
-后端不知道自己在哪个项目里，也不知道产物要写到哪儿——它只认数据与 trait。
-
----
-
-== 前后端分离 - 纪律
-
-分离不靠自觉，靠几条硬规矩：
-
-- 后端不碰 `gctx()`、`std::fs` 和配置类型：没有全局状态，也不自己读写文件
-- 后端*全同步*：没有 async trait、不依赖 tokio；全项目唯一的异步点是 TLE/MLE 监控
-- `tuack-utils` 不依赖前端：要说给用户的话是 `Vec<String>`、要落盘的文件是 `Vec<RuleFile>`，交出去由前端显示和写盘
-- 后端注释里*不许*写「由前端实现」——契约只描述数据与约束，不描述消费者
-- 契约（`tuack-lib`）与实现（`tuack-utils`）分离，于是同一组 trait 也能由 WASM 插件实现
-
----
-
-== 前后端分离 - 一个例子
-
 #grid(
-  columns: (1.5fr, 1fr),
-  column-gutter: 18pt,
-  align: top,
-  [
-    #code(raw(read("assets/开发细节/前后端分离/judge.rs"), lang: "rust", block: true), size: 11pt)
-  ],
-  [
-    后端只会回答「*这一个测试点*得几分」，连失败都当数据返回；它不知道子任务和总分是什么。
-
-    #v(6pt)
-    怎么合成总分、按什么分组，全在前端——策略取自配置，两个实现：正式数据按 `runtime.subtasks` 分组，样例固定一组。
-
-    #v(6pt)
-    所以换计分模型不用碰后端。
-  ],
-)
-
----
-
-== 前后端分离 - 契约
-
-造数据、判题之外，渲染与导出也是同一套分法。交接的那份文档长这样——注意 `Problem` 里那一项。
-
-#grid(
-  columns: (1fr, 1fr),
+  columns: (auto, 1fr),
   column-gutter: 16pt,
-  align: top,
-  [
-    #code(raw(read("assets/开发细节/前后端分离/document.rs"), lang: "rust", block: true), size: 11.5pt)
-    #v(4pt)
-    题面在交出去之前已经是树，不是文本。
-  ],
-  [
-    #code(raw(read("assets/开发细节/前后端分离/traits.rs"), lang: "rust", block: true), size: 11.5pt)
-    #v(4pt)
-    渲染与导出同构，插件实现的就是这两个 trait——两侧都能换。
-  ],
+  row-gutter: 6pt,
+  align: (left, left),
+  [#mono("tuack-lib")],        [只放数据与 trait：上面那些抽象的定义，不碰文件、不碰全局状态],
+  [#mono("tuack-utils")],      [真家伙都在这儿：CppGenerator、CppValidator、FsAssetProvider、Typst／Markdown 渲染器、Lemon／Arbiter 导出器],
+  [#mono("tuack-config")],     [配置文件的结构，只依赖契约层],
+  [#mono("tuack-plugin-sdk")], [把同一组 trait 交给 WASM 插件——插件填的是同样的空],
+  [#mono("tuack-ng-parser")],  [AST 与解析／打印，三方共用],
+  [#mono("tuack-ng")],         [前端：拼装、交互、进度条，负责把产物写到磁盘],
 )
 
 
