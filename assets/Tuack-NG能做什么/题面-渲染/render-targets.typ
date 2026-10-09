@@ -1,6 +1,6 @@
 // Markdown 导出那一页的数据：同一段题面在三套目标下的写法差异。
 // 用在：== 题面 - 渲染。
-#import "style.typ": *
+#import "../../style.typ": *
 
 // 这两栏用的字号与行高（比正文小）
 #let MD-CODE = 8.5pt

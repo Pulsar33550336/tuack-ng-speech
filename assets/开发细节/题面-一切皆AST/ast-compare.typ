@@ -1,6 +1,6 @@
 // 题面 AST 对照页的数据：左原文、右解析树，同一种语法元素同一种颜色。
 // 用在：== 题面 - 一切皆 AST。
-#import "style.typ": *
+#import "../../style.typ": *
 
 // 左栏：题面 Markdown 原文，逐元素上色
 #let m-md = src-text("

@@ -1,5 +1,5 @@
 // 外置表格那一页的数据。用在：== 题面 - 语法 - 外置表格。
-#import "style.typ": *
+#import "../../style.typ": *
 
 // Jinja 的 for 循环直接生成带合并单元格的 Markdown 表格，也就是「题面里变成一坨」的
 // 写法；调用处 #cblock(tbl-jinja, hl: 6) 指定高亮行。

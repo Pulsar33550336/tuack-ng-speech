@@ -28,7 +28,7 @@
 }
 #title-slide()
 
-#import "parts/style.typ": *
+#import "assets/style.typ": *
 
 #script[
   大家好，我是 Tuack-NG 的开发者兼设计者，很高兴有这样一个机会，向大家介绍我的项目。
@@ -56,11 +56,11 @@
 
 #pause
 
-#image("assets/intro/image2.png")
+#image("assets/前言/image2.png")
 
 #pause
 
-#image("assets/intro/image.png")
+#image("assets/前言/image.png")
 
 #pause
 
@@ -164,7 +164,7 @@ Tuack-NG 使用 Markdown 编写题面，并且支持*所有 CNOI 语法*。
     left: card[
       #align(center)[#text(size: 14pt)[*题面源码*]]
       #set text(size: 11pt)
-      #raw(read("assets/statement/cnoi-syntax.md"), lang: "md")
+      #raw(read("assets/Tuack-NG能做什么/题面-语法/cnoi-syntax.md"), lang: "md")
     ],
     right: card[
       #align(center)[#text(size: 14pt)[*渲染结果*]]
@@ -172,11 +172,11 @@ Tuack-NG 使用 Markdown 编写题面，并且支持*所有 CNOI 语法*。
         columns: (1fr, 1fr),
         column-gutter: 10pt,
         align(center)[
-          #image("assets/statement/cnoi-syntax.png", height: 235pt)
+          #image("assets/Tuack-NG能做什么/题面-语法/cnoi-syntax.png", height: 235pt)
           #text(size: 15pt)[Tuack-NG]
         ],
         align(center)[
-          #image("assets/statement/cnoi-syntax-cnoi.png", height: 235pt)
+          #image("assets/Tuack-NG能做什么/题面-语法/cnoi-syntax-cnoi.png", height: 235pt)
           #text(size: 15pt)[CNOI]
         ],
       )
@@ -190,7 +190,7 @@ Tuack-NG 使用 Markdown 编写题面，并且支持*所有 CNOI 语法*。
 
 Tuack-NG 还支持更强大的*模板系统*。
 
-#import "parts/template-system.typ": m-left, m-right
+#import "assets/Tuack-NG能做什么/题面-语法-模板系统/template-system.typ": m-left, m-right
 
 #{
   set align(top)
@@ -219,7 +219,7 @@ Tuack-NG 还支持更强大的*模板系统*。
 手写的表会过时，那就用模板自动生成——可题面里就变成了一坨。
 
 #v(4pt)
-#import "parts/external-table.typ": tbl-jinja
+#import "assets/Tuack-NG能做什么/题面-语法-外置表格/external-table.typ": tbl-jinja
 
 #cblock(tbl-jinja, size: 16pt, leading: 0.55em, hl: 6, note: "PS：高亮内容是一行 🤡")
 
@@ -228,7 +228,7 @@ Tuack-NG 还支持更强大的*模板系统*。
 同一张表，换成一个 Lua 文件。
 
 #v(4pt)
-#code(raw(read("assets/statement/table-merge.lua"), lang: "lua", block: true), size: 12.5pt)
+#code(raw(read("assets/Tuack-NG能做什么/题面-语法-外置表格/table-merge.lua"), lang: "lua", block: true), size: 12.5pt)
 
 == 题面 - 渲染
 
@@ -244,11 +244,11 @@ Tuack-NG 支持多种渲染目标，包括但不限于 (C)NOI、CCPC 与 Markdow
   align: (center + top, center + top),
   [
     #text(size: 22pt)[NOI]
-    #image("assets/render/cover-noi-top.png", width: 100%)
+    #image("assets/Tuack-NG能做什么/题面-渲染/cover-noi-top.png", width: 100%)
   ],
   [
     #text(size: 22pt)[CCPC]
-    #image("assets/render/cover-ccpc-top.png", width: 100%)
+    #image("assets/Tuack-NG能做什么/题面-渲染/cover-ccpc-top.png", width: 100%)
   ],
 )
 
@@ -258,7 +258,7 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
 
 #v(-12pt)
 
-#import "parts/render-targets.typ": MD-CODE, MD-LH, md-head, md-plain, md-loj, md-uoj
+#import "assets/Tuack-NG能做什么/题面-渲染/render-targets.typ": MD-CODE, MD-LH, md-head, md-plain, md-loj, md-uoj
 
 #grid(
   columns: (1.2fr, 2.72fr, 2.5fr),
@@ -290,12 +290,12 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
   align: top,
   [
     很多人是这么造数据的：
-    #code(raw(read("assets/data/gen-naive.cpp"), lang: "cpp", block: true), size: 14pt)
+    #code(raw(read("assets/Tuack-NG能做什么/数据与测试/gen-naive.cpp"), lang: "cpp", block: true), size: 14pt)
     但参数和文件名写死在源码里，每跑一次就得改一次。
   ],
   [
     聪明些的写法：
-    #code(raw(read("assets/data/gen-array.cpp"), lang: "cpp", block: true), size: 14pt)
+    #code(raw(read("assets/Tuack-NG能做什么/数据与测试/gen-array.cpp"), lang: "cpp", block: true), size: 14pt)
     但*不可复现*：种子是 `time(0)`；就算种子固定，*改一个也得全部重造*——数组里插一个点，它后面所有点的随机序列都跟着变了。
   ],
 )
@@ -309,12 +309,12 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
   column-gutter: 20pt,
   align: top,
   [
-    #code(raw(read("assets/data/gen-testlib.cpp"), lang: "cpp", block: true), size: 14pt)
+    #code(raw(read("assets/Tuack-NG能做什么/数据与测试/gen-testlib.cpp"), lang: "cpp", block: true), size: 14pt)
   ],
   [
     参数从配置里来：
     #v(-8pt)
-    #code(raw(read("assets/data/gen-args.json"), lang: "json", block: true), size: 14pt)
+    #code(raw(read("assets/Tuack-NG能做什么/数据与测试/gen-args.json"), lang: "json", block: true), size: 14pt)
     #v(-8pt)
     然后，生成器会被传入 `-n=2 -m=20 -seed=<...>`。
   ],
@@ -332,7 +332,7 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
   column-gutter: 20pt,
   align: top,
   [
-    #code(raw(read("assets/data/seed.json"), lang: "json", block: true), size: 16pt)
+    #code(raw(read("assets/Tuack-NG能做什么/数据与测试/seed.json"), lang: "json", block: true), size: 16pt)
   ],
   [
     #set align(horizon)
@@ -356,7 +356,7 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
   column-gutter: 20pt,
   align: top,
   [
-    #code(raw(read("assets/data/tests.json"), lang: "json", block: true), size: 16pt)
+    #code(raw(read("assets/Tuack-NG能做什么/数据与测试/tests.json"), lang: "json", block: true), size: 16pt)
   ],
   [
     #set align(horizon)
@@ -378,10 +378,10 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
   column-gutter: 20pt,
   align: top,
   [
-    #code(raw(read("assets/data/val.cpp"), lang: "cpp", block: true), size: 16pt)
+    #code(raw(read("assets/Tuack-NG能做什么/数据与测试/val.cpp"), lang: "cpp", block: true), size: 16pt)
   ],
   [
-    #code(raw(read("assets/data/validator.json"), lang: "json", block: true), size: 16pt)
+    #code(raw(read("assets/Tuack-NG能做什么/数据与测试/validator.json"), lang: "json", block: true), size: 16pt)
     同时，我们支持在生成数据时顺手校验，从源头解决问题。
   ],
 )
@@ -403,17 +403,17 @@ Tuack-NG 帮你导出到评测平台。
   [
     #align(center)[Lemon]
 
-    #code(raw(read("assets/export/dump-lemon.txt"), lang: "txt", block: true), size: 12pt)
+    #code(raw(read("assets/Tuack-NG能做什么/导出/dump-lemon.txt"), lang: "txt", block: true), size: 12pt)
   ],
   [
     #align(center)[Arbiter]
 
-    #code(raw(read("assets/export/dump-arbiter.txt"), lang: "txt", block: true), size: 12pt)
+    #code(raw(read("assets/Tuack-NG能做什么/导出/dump-arbiter.txt"), lang: "txt", block: true), size: 12pt)
   ],
   [
     #align(center)[CCR-Plus]
 
-    #code(raw(read("assets/export/dump-ccr-plus.txt"), lang: "txt", block: true), size: 12pt)
+    #code(raw(read("assets/Tuack-NG能做什么/导出/dump-ccr-plus.txt"), lang: "txt", block: true), size: 12pt)
   ],
 )
 
@@ -444,7 +444,7 @@ Tuack-NG 帮你导出到评测平台。
   [
     #text(size: 18pt, weight: "bold")[批量改配置：`conf`]
     #v(6pt)
-    #code(raw(read("assets/export/conf-cmds.txt"), lang: "txt", block: true), size: 14pt)
+    #code(raw(read("assets/Tuack-NG能做什么/小功能/conf-cmds.txt"), lang: "txt", block: true), size: 14pt)
     #v(8pt)
     在比赛日或比赛层级执行，一次改掉下面所有题目。
   ],
@@ -455,7 +455,7 @@ Tuack-NG 帮你导出到评测平台。
 Tuack-NG 不是一句#ruby[呼 #strike[Rust] 护 _Tuack-NG_][「Expecto _Tuack-NGum_!」]召唤出来的。
 
 #figure(caption: [没错，这是 Gemini 生成的], numbering: none)[
-  #image("assets/dev/hp.png", height: 60%)
+  #image("assets/开发细节/hp.png", height: 60%)
 ]
 
 我们来讲讲 Tuack-NG 开发中的关键细节。
@@ -476,7 +476,7 @@ AST，即*抽象语法树*，是对题面（即 Markdown）的一种结构化表
 
 ---
 
-#import "parts/ast-compare.typ": m-md, m-ast
+#import "assets/开发细节/题面-一切皆AST/ast-compare.typ": m-md, m-ast
 
 #grid(
   columns: (1fr, 1.35fr),
@@ -498,7 +498,7 @@ AST，即*抽象语法树*，是对题面（即 Markdown）的一种结构化表
 Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
 
 #v(6pt)
-#include "parts/ast-pipeline.typ"
+#include "assets/开发细节/题面-一切皆AST/ast-pipeline.typ"
 
 == 未细调
 
@@ -525,14 +525,14 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   [
     #text(size: 15pt, weight: "bold")[插件能加什么]
     #v(4pt)
-    #code(raw(read("assets/dev/plugin-extends.txt"), lang: "txt", block: true), size: 12pt)
+    #code(raw(read("assets/开发细节/插件/plugin-extends.txt"), lang: "txt", block: true), size: 12pt)
     #v(6pt)
     `ren --list` 和 `dump --list` 列出当前全部可用名字，内置的和插件的都在里面。
   ],
   [
     #text(size: 15pt, weight: "bold")[怎么装]
     #v(4pt)
-    #code(raw(read("assets/dev/plugin-install.txt"), lang: "txt", block: true), size: 12pt)
+    #code(raw(read("assets/开发细节/插件/plugin-install.txt"), lang: "txt", block: true), size: 12pt)
     #v(6pt)
     市场在 `tuack-ng/tuack-ng-plugins`。刚装上是未信任状态，不加载；更新后取消信任，需要重新确认。
   ],
@@ -547,10 +547,10 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   column-gutter: 20pt,
   align: top,
   [
-    #code(raw(read("assets/dev/arch-crates.txt"), lang: "txt", block: true), size: 12pt)
+    #code(raw(read("assets/开发细节/架构/arch-crates.txt"), lang: "txt", block: true), size: 12pt)
   ],
   [
-    #code(raw(read("assets/dev/renderer-trait.rs"), lang: "rust", block: true), size: 12pt)
+    #code(raw(read("assets/开发细节/架构/renderer-trait.rs"), lang: "rust", block: true), size: 12pt)
   ],
 )
 
@@ -565,14 +565,14 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   [
     #text(size: 15pt, weight: "bold")[题面]
     #v(4pt)
-    #code(raw(read("assets/dev/rendering-flow.txt"), lang: "txt", block: true), size: 12pt)
+    #code(raw(read("assets/开发细节/前后端分离/rendering-flow.txt"), lang: "txt", block: true), size: 12pt)
     #v(6pt)
     换目标不用动题面。前面那页三种渲染结果就是从同一份源出来的，因为中间那棵 AST 是共用的。
   ],
   [
     #text(size: 15pt, weight: "bold")[导出]
     #v(4pt)
-    #code(raw(read("assets/dev/assemble-flow.txt"), lang: "txt", block: true), size: 12pt)
+    #code(raw(read("assets/开发细节/前后端分离/assemble-flow.txt"), lang: "txt", block: true), size: 12pt)
     #v(6pt)
     打印器、导出器都是可插拔的后端，插件挂的就是这里；一个后端出问题，不影响别的目标。
   ],
@@ -589,7 +589,7 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   [
     #text(size: 15pt, weight: "bold")[边界只走数据]
     #v(4pt)
-    #code(raw(read("assets/dev/wasm-runtime.txt"), lang: "txt", block: true), size: 12pt)
+    #code(raw(read("assets/开发细节/插件-WASM/wasm-runtime.txt"), lang: "txt", block: true), size: 12pt)
     #v(6pt)
     跨 extism 边界只传可序列化的数据与可恢复的错误；`Renderer`、`Dumper` 这些 host 侧 trait 留在各自模块，不出门。
   ],
