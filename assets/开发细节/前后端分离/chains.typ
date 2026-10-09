@@ -58,7 +58,7 @@
       node((1, 4), cell(C1)[`Runner` & `Checker`], fill: T, name: <t1>),
       node((2, 4), cell(C2)[分数], fill: O, name: <t2>),
       edge(<t0.east>, <t1.west>, "->", [喂入 `Data`]),
-      edge(<t1.east>, <t2.west>, "->", [算分]),
+      edge(<t1.east>, <t2.west>, "->", [前端算分]),
 
       node((0, 5), cell(C0)[`Document`], fill: S, name: <c0>),
       node((1, 5), cell(C1)[报告], fill: O, name: <c1>),

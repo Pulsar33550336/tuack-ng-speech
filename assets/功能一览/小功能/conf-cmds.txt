@@ -1,5 +1,5 @@
-tuack-ng conf title "2025 模拟赛"
-tuack-ng conf time 2.0
-tuack-ng conf length 5h
+tuack-ng conf title "Day 1" "Day 2"
+tuack-ng conf length 5 5
+tuack-ng conf time 2.0 2.0
 tuack-ng conf conf <字段> <值>
 tuack-ng conf migrate

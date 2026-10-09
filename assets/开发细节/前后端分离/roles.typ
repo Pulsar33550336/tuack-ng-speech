@@ -1,6 +1,6 @@
 // 契约关系图：宿主在上、契约居中、实现与插件路径在下，共享数据模型垫底。
 // 箭头只表达与契约层的关系，不画完整的 Cargo 依赖图。
-// 用在：== 前后端分离 - 谁来实现，由 main.typ 里 #include 引入。
+// 用在：== 前后端分离 - 实现，由 main.typ 里 #include 引入。
 #import "@preview/fletcher:0.5.8": diagram, edge, node
 
 #let B = rgb("#eaf2fb")  // 宿主 / 实现路径

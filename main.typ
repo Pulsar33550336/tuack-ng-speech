@@ -130,6 +130,8 @@
 + 造出的数据 / 样例*强度太弱*
 + 想用 Tuack / Tuack-NG / Hull 等工具，但是*文档难读，或者门槛太高*
 
+#v(10pt)
+
 这次讲演，我将尝试讲解：Tuack-NG 可以解决哪些问题。
 
 = 功能一览
@@ -142,11 +144,11 @@ Tuack-NG 开发时的主要目标便是辅助题目相关的所有环节，主�
 
 - *题面*：书写与生成美观的 PDF/导出到 OJ；
 - *数据与测试*：造 & 校验数据，测试测试用例；
-- *导出*：将评测资源导出到评测机。
+- *导出*：将评测资源导出到评测平台。
 
 == 题面 - 语法
 
-Tuack-NG 使用 Markdown 编写题面，并且支持*所有 CNOI 语法*。
+Tuack-NG 使用 Markdown 编写题面，并且支持*完整的 CNOI 拓展语法*。
 
 #table(
   columns: (auto, 1fr),
@@ -260,7 +262,7 @@ Tuack-NG 支持多种渲染目标，包括但不限于 (C)NOI、CCPC 与 Markdow
 
 ---
 
-Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标题层级，表格等。
+Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标题层级、表格等。
 
 #v(-12pt)
 
@@ -308,7 +310,7 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
 
 == 数据与测试 - 生成器
 
-与 Tuack-NG 集成时，生成器里不需要文件名、不需要「第几个测试点」、也不需要种子——只剩「把参数变成数据」这一件事。
+与 Tuack-NG 集成时，生成器里不需要文件名、不需要「第几个测试点」，也不用自己生成和保存种子——只剩「把参数变成数据」这一件事。
 
 #grid(
   columns: (0.75fr, 1fr),
@@ -349,7 +351,7 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
 
 #line(length: 100%, stroke: gray)
 
-同样的 `args` 加同样的 `seed`，*换时间、换机器，出来的还是同一份数据*；
+同样的 `args` 加同样的 `seed`，*换时间、换机器，出来的还是同一份数据*。
 
 == 数据与测试 - 测试
 
@@ -395,7 +397,7 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
 
 == 导出
 
-Lemon 一套、Arbiter 一套，CCR 一套……BOOM，换个评测平台就得把数据重新手配一遍。
+Lemon 一套、Arbiter 一套，CCR-Plus 一套……BOOM，换个评测平台就得把数据重新手配一遍。
 
 #v(4pt)
 
@@ -461,10 +463,11 @@ Tuack-NG 帮你导出到评测平台。
 插件可以拓展 Tuack-NG 的功能。
 
 #v(8pt)
-- *处理器*：在渲染器处理题面的途中改写 AST；
-- *渲染器*：增加一个渲染目标；
+- *处理器*：在 `ren` 组装渲染文档的途中改写 AST；
+- *渲染器*：提供新的渲染实现；
+- *模板*：增加一个渲染目标；
 - *导出器*：增加一个导出目标；
-- *资源*：为 Tuack-NG 贡献新模板。
+- *资源*：随插件携带模板、字体等文件。
 
 
 = 开发细节
@@ -519,7 +522,7 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
 == 前后端分离
 
 Tuack-NG 做了前后端分离。\
-将与文件系统 / 操作系统无关的后端分离，使得 Tuack-NG 更容易被拓展。
+将与文件系统 / 操作系统无关的后端从前端分离出来，从而让 Tuack-NG 更容易被拓展。
 
 #include "assets/开发细节/前后端分离/chains.typ"
 
@@ -537,19 +540,19 @@ Tuack-NG 做了前后端分离。\
   [
     #align(center)[#text(size: 18pt)[*RPC*]]
     #v(2pt)
-    Tuack-NG `rpc` 分支上，正在开发的，基于 JSON-RPC 2.0 的 RPC 服务端。
+    Tuack-NG `rpc` 分支上正在开发的、基于 JSON-RPC 2.0 的 RPC 服务端。
   ],
   [
     #align(center)[#text(size: 18pt)[*Tuack-GUI*]]
     #v(2pt)
     Tuack-NG 的图形化前端。
 
-    目前基于命令行，基于 RPC 的逻辑正在接入。
+    目前是对命令行的封装，基于 RPC 的逻辑正在接入。
   ],
   [
     #align(center)[#text(size: 18pt)[*Tuack for VS Code*]]
     #v(2pt)
-    Tuack-NG 的 VSCode 图形化前端，基于 RPC。WIP。
+    Tuack-NG 的 VS Code 图形化前端，基于 RPC。WIP。
   ],
 )
 #v(-18pt)
@@ -588,7 +591,7 @@ Tuack-NG 的插件基于 WASM 运行时与 Extism（一个插件系统的 SDK �
   [
     *Rust 没有稳定的 ABI*
 
-    ABI 全称「二进制软件接口」——程序想动态加载代码就得靠它，这是插件的基础。Rust 不提供稳定的 ABI，插件一旦编译器版本或平台不同，就可能把 Tuack-NG 拖崩。
+    ABI 全称「应用二进制接口」——程序想动态加载代码就得靠它，这是插件的基础。Rust 不提供稳定的 ABI，插件一旦编译器版本或平台不同，就可能把 Tuack-NG 拖崩。
   ],
   [
     *二进制库文件跨平台不兼容*
@@ -625,7 +628,7 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
 
     所以有了 `tuack-plugin-sdk`：插件作者只管实现业务，所有跨 Extism 与主程序的边界交给它。
 
-    并且，主程序功能的实现与插件同样功能的实现几乎一致，这使得开发插件可以参考主程序的代码。
+    并且，插件实现某个功能的方式与主程序几乎一致，写插件时可以直接参考主程序的代码。
   ],
 )
 
@@ -637,9 +640,9 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
 #include "assets/开发细节/插件-信任模型/trust-flow.typ"
 #v(2pt)
 
-同时，*Tuack-NG 的插件市场不允许闭源插件，并且将要强制构建产物必须来自 CI（持续集成）*，以保证安全性。
+同时，*Tuack-NG 的插件市场不允许闭源插件，构建产物也必须来自 CI（持续集成）*，以保证安全性（这两条已经执行，但尚未成文）。
 
-#text(fill: gray)[CI（持续集成）：具体地说，就是在 Github 提供的机器上使用写好的工作流构建插件，以避免人工插手的可能。]
+#text(fill: gray)[CI（持续集成）：具体地说，就是在 GitHub 提供的机器上使用写好的工作流构建插件，以排除人工插手的可能。]
 
 #touying-slide-wrapper(self => {
   self = utils.merge-dicts(self, config-page(fill: skyl))
@@ -657,12 +660,12 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
 
         #set text(size: 16pt)
 
-        本幻灯片在人类的监督下，使用 DeepSeek V4.1 Flash（搭配 DeepSeek Harness），并经过人类辅助制作，基于 Typst、 Touying 与 xwysyy 模板制作，保证人类的贡献大于 LLM。
+        本幻灯片在人类的监督下，使用 DeepSeek V4.1 Flash（搭配 DeepSeek Harness），并经过人类辅助制作，基于 Typst、Touying 与 xwysyy 模板排版，保证人类的贡献大于 LLM。
 
         在制作过程中，我：
 
         - 参考了 ChatGPT（5.6-Luna & 6）的建议；
-        - 向大家发布了问卷，以及与一些同学进行了交流。
+        - 向大家发布了问卷，也与一些同学进行了交流。
 
         在此一并感谢！
 
@@ -670,20 +673,20 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
       [
         #align(center)[#text(size: 22pt, weight: "bold")[查看更多]]
 
-        #v(8pt)
+        #v(2pt)
         #grid(
           columns: (1fr, 1.1fr),
           column-gutter: 12pt,
-          row-gutter: 8pt,
+          row-gutter: 6pt,
           [#grid(
             columns: (auto, 1fr),
             column-gutter: 12pt,
             row-gutter: 8pt,
             align: horizon,
-            [#image("assets/致谢-查看更多/qr-tuack-ng.png", height: 50pt)],
+            [#image("assets/致谢-查看更多/qr-tuack-ng.png", height: 44pt)],
             [*项目仓库*\ #text(size: 13pt)[`github.com/tuackng/tuack-ng`]],
 
-            [#image("assets/致谢-查看更多/qr-gui.png", height: 50pt)],
+            [#image("assets/致谢-查看更多/qr-gui.png", height: 44pt)],
             [*Tuack-GUI*\ #text(size: 13pt)[`github.com/tuackng/Tuack-GUI`]],
           )],
           [#grid(
@@ -691,28 +694,30 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
             column-gutter: 12pt,
             row-gutter: 8pt,
             align: horizon,
-            [#image("assets/致谢-查看更多/qr-home.png", height: 50pt)],
+            [#image("assets/致谢-查看更多/qr-home.png", height: 44pt)],
             [*官网（文档）*\ #text(size: 13pt)[`tuack-ng.ink`]],
 
-            [#image("assets/致谢-查看更多/qr-vscode.png", height: 50pt)],
+            [#image("assets/致谢-查看更多/qr-vscode.png", height: 44pt)],
             [*Tuack for VS Code*\ #text(size: 13pt)[`github.com/Qaaxaap/tuack-vscode`]],
           )],
         )
 
-        #v(8pt)
+        #v(2pt)
 
-        #set text(size: 16pt)
+        #set text(size: 14pt)
 
         #align(center)[#text(size: 22pt, weight: "bold")[开源 & 许可证]]
 
         本幻灯片的演讲文本（包括图片）以 CC BY-SA 4.0 授权；\
-        代码（包括内联在 Typst 源文件的）以 MIT 授权。
+        代码（包括内联在 Typst 源文件中的）以 MIT 授权。\
+        由本项目或系列项目生成的文字与图片按 CC 授权，其余素材参考各自协议；\
+        其中 NOIP 题面来自 CCF，以 CC BY-NC 授权。
 
         #grid(
           columns: (auto, 1fr),
           column-gutter: 10pt,
           align: horizon,
-          [#image("assets/致谢-查看更多/qr-speech.png", height: 50pt)],
+          [#image("assets/致谢-查看更多/qr-speech.png", height: 44pt)],
           [*幻灯片源码仓库*\ #text(size: 13pt)[`github.com/Pulsar33550336/tuack-ng-speech`]],
         )
 

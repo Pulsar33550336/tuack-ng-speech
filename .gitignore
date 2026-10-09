@@ -10,6 +10,9 @@
 # Rust 构建产物（snippets/ast-dump 用）
 target/
 
+# 本地 skill（DSH 项目级技能根，只在本机使用）
+/.dsh/
+
 # 编辑器 / 系统
 .DS_Store
 *.swp
