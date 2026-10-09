@@ -840,7 +840,9 @@ Tuack-NG 帮你导出到评测平台。
 
 Tuack-NG 不是一句#ruby[呼 #strike[Rust] 传 _Tuack-NG_][「Expecto _Tuack-NGum_!」]召唤出来的。
 
-#image("assets/hp.png", height: 60%)
+#figure(caption: [没错，这是 Gemini 生成的], numbering: none)[
+  #image("assets/hp.png", height: 60%)
+]
 
 我们来讲讲 Tuack-NG 开发中的关键细节。
 
