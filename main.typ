@@ -500,6 +500,14 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
 #v(6pt)
 #include "assets/开发细节/题面-一切皆AST/ast-pipeline.typ"
 
+== 前后端分离
+
+Tuack-NG 做了前后端分离。\
+将与文件系统 / 操作系统无关的后端分离，使得 Tuack-NG 更容易被拓展。
+
+#v(4pt)
+#include "assets/开发细节/前后端分离/chains.typ"
+
 == 未细调
 
 #align(center)[
@@ -514,18 +522,11 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   #line(length: 55%, stroke: 0.8pt + gray)
 ]
 
-== 前后端分离
-
-挑几个功能板块，看它们各自走过哪些抽象：加色的名字都是 trait，填的人可以换，链子不变。每一步要读的文件都由 `AssetProvider` 惰性取。
-
-#v(4pt)
-#include("assets/开发细节/前后端分离/chains.typ")
-
 
 == 前后端分离 - 谁来实现
 
 #v(2pt)
-#include("assets/开发细节/前后端分离/layers.typ")
+#include "assets/开发细节/前后端分离/layers.typ"
 
 #v(8pt)
 #grid(
@@ -533,12 +534,14 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   column-gutter: 16pt,
   row-gutter: 6pt,
   align: (left, left),
-  [`tuack-lib`],        [只放数据与 trait：上面那些抽象的定义，不碰文件、不碰全局状态],
-  [`tuack-utils`],      [真家伙都在这儿：CppGenerator、CppValidator、FsAssetProvider、Typst/Markdown 渲染器、Lemon/Arbiter 导出器],
-  [`tuack-config`],     [配置文件的结构，只依赖契约层],
+  [`tuack-lib`], [只放数据与 trait：上面那些抽象的定义，不碰文件、不碰全局状态],
+  [`tuack-utils`],
+  [真家伙都在这儿：CppGenerator、CppValidator、FsAssetProvider、Typst/Markdown 渲染器、Lemon/Arbiter 导出器],
+
+  [`tuack-config`], [配置文件的结构，只依赖契约层],
   [`tuack-plugin-sdk`], [把同一组 trait 交给 WASM 插件——插件填的是同样的空],
-  [`tuack-ng-parser`],  [AST 与解析/打印，三方共用],
-  [`tuack-ng`],         [前端：拼装、交互、进度条，负责把产物写到磁盘],
+  [`tuack-ng-parser`], [AST 与解析/打印，三方共用],
+  [`tuack-ng`], [前端：拼装、交互、进度条，负责把产物写到磁盘],
 )
 
 
