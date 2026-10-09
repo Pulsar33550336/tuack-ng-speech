@@ -3,6 +3,8 @@
 #import "@preview/fletcher:0.5.8": diagram, edge, node
 #show: show-cn-fakebold
 
+#import "assets/icon.typ": tuack-icon
+
 #show: xwysyy-pre.with(
   theme: "sky",
   font: "LXGW WenKai",
@@ -10,11 +12,11 @@
   code-font: "Maple Mono Normal NL NF",
   lang: "zh",
   config-info(
-    title: [Tuack-NG],
-    subtitle: [请输入文本],
+    title: [#box(tuack-icon(ink: white, size: 2em))\ Tuack-NG],
+    subtitle: [功能 & 设计分享],
     author: "Pulsar2021",
-    date: datetime.today(),
-    // institution: "LCA 营（MS Attached to NWPU）",
+    date: datetime(year: 2026, month: 10, day: 13),
+    institution: "MS Attached to NWPU",
   ),
   // config-common(show-notes-on-second-screen: right),
 )
@@ -130,13 +132,17 @@
 
 这次讲演，我将尝试讲解：Tuack-NG 可以解决哪些问题。
 
-= Tuack-NG 能做什么？
+= 功能一览
 
 说了这么多，Tuack-NG 可以做什么呢？
 
-== 题面
+#sep
 
-Tuack-NG 开发时的第一个目标便是辅助题目相关的所有环节。
+Tuack-NG 开发时的主要目标便是辅助题目相关的所有环节，主要涵盖：
+
+- *题面*：书写与生成美观的 PDF/导出到 OJ；
+- *数据与测试*：造 & 校验数据，测试测试用例；
+- *导出*：将评测资源导出到评测机。
 
 == 题面 - 语法
 
@@ -465,7 +471,7 @@ Tuack-NG 帮你导出到评测平台。
 
 Tuack-NG 不是一句#ruby[呼 #strike[Rust] 护 _Tuack-NG_][「Expecto _Tuack-NGum_!」]召唤出来的。
 
-#figure(caption: [这张图是 Gemini 生成的], numbering: none)[
+#figure(caption: [这张图显然是 Gemini 生成的], numbering: none)[
   #image("assets/开发细节/hp.png", height: 60%)
 ]
 
