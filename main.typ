@@ -827,7 +827,20 @@ Tuack-NG 帮你导出到评测平台。
   ],
 )
 
+// 用法：#ruby[上方小字][基文]
+#let ruby(rt, rb) = context {
+  let w = measure(rb).width
+  box(width: w)[
+    #place(top + center, dy: -0.82em, text(size: 0.7em, rt))
+    #rb
+  ]
+}
+
 = 开发细节
+
+Tuack-NG 不是一句#ruby[呼 #strike[Rust] 传 _Tuack-NG_][「Expecto _Tuack-NGum_!」]召唤出来的。
+
+我们来讲讲 Tuack-NG 开发中的关键细节。
 
 == 题面 - 一切皆 AST
 
