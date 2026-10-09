@@ -568,6 +568,71 @@ Tuack-NG 做了前后端分离。\
 )
 
 
+== 插件
+
+Tuack-NG 的插件基于 WASM 运行时与 Extism（一个插件系统的 SDK 库）。
+
+== 插件 - Why WASM?
+
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 20pt,
+  row-gutter: 40pt,
+  align: top,
+  [
+    *Rust 没有稳定的 ABI*
+
+    ABI 全称「二进制软件接口」——程序想动态加载代码就得靠它，这是插件的基础。Rust 不提供稳定的 ABI，插件一旦编译器版本或平台不同，就可能把 Tuack-NG 拖崩。
+  ],
+  [
+    *二进制库文件跨平台不兼容*
+
+    作者得为 Windows 编 `.dll`、为 Linux 编 `.so`、为 macOS 编 `.dylib`……每多一个平台就多一份编译与分发工作。
+  ],
+
+  [
+    *安全性*
+
+    WASM 跑在沙箱里，权限能逐项控制，可以防住危险插件引发的安全问题。
+  ],
+  [
+    *同质性*
+
+    插件可以用和主程序同一种语言写：不必维护另一套语言的 API，插件作者的负担也小。
+  ],
+)
+
+== 插件 - Plugin SDK
+
+Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出函数、按名字调用、参数与返回值走序列化。再往下就不管了——写插件的人被迫先学会跨边界，而不是写业务。
+
+
+#grid(
+  columns: (1.75fr, 1fr),
+  column-gutter: 20pt,
+  align: top,
+  [
+    #code(raw(read("assets/开发细节/插件-WASM/sdk-plugin.rs"), lang: "rust", block: true), size: 14pt)
+  ],
+  [
+    #set align(horizon)
+
+    所以有了 `tuack-plugin-sdk`：插件作者只管实现业务，所有跨 Extism 与主程序的边界交给它。
+
+    并且，主程序功能的实现与插件同样功能的实现几乎一致，这使得开发插件可以参考主程序的代码。
+  ],
+)
+
+== 插件 - 信任模型
+
+插件是别人的代码，WASM 几乎不可审计。因此，插件需要公开它超出默认值的能力（比如，访问文件，执行「某些」命令），并由用户手动确认并信任。
+
+#v(2pt)
+#include "assets/开发细节/插件-信任模型/trust-flow.typ"
+#v(2pt)
+
+同时，*Tuack-NG 的插件市场不允许闭源插件*。
+
 == 未细调
 
 #align(center)[
@@ -581,41 +646,3 @@ Tuack-NG 做了前后端分离。\
   #v(12pt)
   #line(length: 55%, stroke: 0.8pt + gray)
 ]
-
-== 架构
-
-源码分四块。插件能挂进流程，是因为插件和内置实现用的是同一套 trait。
-
-#grid(
-  columns: (1fr, 1.45fr),
-  column-gutter: 20pt,
-  align: top,
-  [
-    #code(raw(read("assets/开发细节/架构/arch-crates.txt"), lang: "txt", block: true), size: 12pt)
-  ],
-  [
-    #code(raw(read("assets/开发细节/架构/renderer-trait.rs"), lang: "rust", block: true), size: 12pt)
-  ],
-)
-
-== 插件 - WASM
-
-插件编译成 WASM 模块，宿主用 Extism 加载。
-
-#grid(
-  columns: (1.15fr, 1fr),
-  column-gutter: 20pt,
-  align: top,
-  [
-    #text(size: 15pt, weight: "bold")[边界只走数据]
-    #v(4pt)
-    #code(raw(read("assets/开发细节/插件-WASM/wasm-runtime.txt"), lang: "txt", block: true), size: 12pt)
-    #v(6pt)
-    跨 extism 边界只传可序列化的数据与可恢复的错误；`Renderer`、`Dumper` 这些 host 侧 trait 留在各自模块，不出门。
-  ],
-  [
-    #text(size: 15pt, weight: "bold")[大文件不进 WASM]
-    #v(4pt)
-    插件声明 `wasi` 时，宿主把临时目录挂成插件里的 `/`，产物落在 `/out`。数据文件不走 WASM，由宿主两边直接对接——几十 MB 的 `1.in` 不会被塞进插件内存。
-  ],
-)
