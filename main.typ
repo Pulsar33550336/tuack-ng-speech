@@ -657,7 +657,7 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
 
         #set text(size: 16pt)
 
-        本幻灯片在人类的监督下，使用 DeepSeek V4.1 Flash（搭配 DeepSeek Harness）制作，基于 Typst、 Touying 与 xwysyy 模板制作，保证人类的贡献大于 LLM。
+        本幻灯片在人类的监督下，使用 DeepSeek V4.1 Flash（搭配 DeepSeek Harness），并经过人类辅助制作，基于 Typst、 Touying 与 xwysyy 模板制作，保证人类的贡献大于 LLM。
 
         在制作过程中，我：
 
@@ -708,7 +708,6 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
         本幻灯片的演讲文本（包括图片）以 CC BY-SA 4.0 授权；\
         代码（包括内联在 Typst 源文件的）以 MIT 授权。
 
-        #v(-10pt)
         #grid(
           columns: (auto, 1fr),
           column-gutter: 10pt,
