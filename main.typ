@@ -502,7 +502,7 @@ AST，即*抽象语法树*，是对题面（即 Markdown）的一种结构化表
   [
     #align(center)[原文]
     #mcol(m-md, size: 11pt, lh: 14pt)
-    #text(fill: gray, size: 14pt)[为了在 PPT 内放下，AST 中的 Span 信息被删除了，不过这不影响理解。]
+    #text(fill: gray, size: 14pt)[为了在幻灯片内放下，AST 中的 Span 信息被删除了，不过这不影响理解。]
   ],
   [
     #align(center)[AST]
@@ -560,14 +560,14 @@ Tuack-NG 做了前后端分离。\
   [
     #align(center)[
       #figure(caption: "https://github.com/tuackng/Tuack-GUI", numbering: none)[
-        #image("assets/开发细节/前后端分离/qr-gui.png", height: 40%)
+        #image("assets/致谢-查看更多/qr-gui.png", height: 40%)
       ]
     ]
   ],
   [
     #align(center)[
       #figure(caption: "https://github.com/Qaaxaap/tuack-vscode", numbering: none)[
-        #image("assets/开发细节/前后端分离/qr-vscode.png", height: 40%)
+        #image("assets/致谢-查看更多/qr-vscode.png", height: 40%)
       ]
     ]
   ],
@@ -641,16 +641,74 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
 
 #text(fill: gray)[CI（持续集成）：具体地说，就是在 Github 提供的机器上使用写好的工作流构建插件，以避免人工插手的可能。]
 
-== 未细调
+#touying-slide-wrapper(self => {
+  self = utils.merge-dicts(self, config-page(fill: skyl))
+  touying-slide(self: self, [
+    #v(-50pt)
+    #align(center)[#text(size: 36pt, fill: sea, font: "Noto Serif")[_Thanks for Watching!_]]
+    #grid(
+      columns: (0.4fr, 1fr),
+      column-gutter: 26pt,
+      align: top,
+      [
+        #align(center)[#text(size: 22pt, weight: "bold")[声明 & 致谢]]
 
-#align(center)[
-  #line(length: 55%, stroke: 0.8pt + gray)
-  #v(12pt)
-  #text(size: 18pt, fill: gray)[以下幻灯片尚未细调]
+        #v(8pt)
 
-  #text(size: 18pt, fill: color.red)[可能包括不完整，错误，AI slop 的内容]
+        #set text(size: 16pt)
 
-  #text(size: 18pt, fill: color.yellow)[请在完成前清空以下内容]
-  #v(12pt)
-  #line(length: 55%, stroke: 0.8pt + gray)
-]
+        本幻灯片在人类的监督下，使用 DeepSeek V4.1 Flash（搭配 DeepSeek Harness）制作，基于 Typst、 Touying 与 xwysyy 模板制作，保证人类的贡献大于 LLM。
+
+        在制作过程中，我：
+
+        - 参考了 ChatGPT（5.6-Luna & 6）的建议；
+        - 向大家发布了问卷，以及与一些同学进行了交流。
+
+        在此一并感谢！
+
+      ],
+      [
+        #align(center)[#text(size: 22pt, weight: "bold")[查看更多]]
+
+        #v(8pt)
+        #grid(
+          columns: (1fr, 1.1fr),
+          column-gutter: 12pt,
+          row-gutter: 8pt,
+          [#grid(
+            columns: (auto, 1fr),
+            column-gutter: 12pt,
+            row-gutter: 8pt,
+            align: horizon,
+            [#image("assets/致谢-查看更多/qr-tuack-ng.png", height: 58pt)],
+            [*项目仓库*\ #text(size: 13pt)[`github.com/tuackng/tuack-ng`]],
+
+            [#image("assets/致谢-查看更多/qr-gui.png", height: 58pt)],
+            [*Tuack-GUI*\ #text(size: 13pt)[`github.com/tuackng/Tuack-GUI`]],
+          )],
+          [#grid(
+            columns: (auto, 1fr),
+            column-gutter: 12pt,
+            row-gutter: 8pt,
+            align: horizon,
+            [#image("assets/致谢-查看更多/qr-home.png", height: 58pt)],
+            [*官网（文档）*\ #text(size: 13pt)[`tuack-ng.ink`]],
+
+            [#image("assets/致谢-查看更多/qr-vscode.png", height: 58pt)],
+            [*Tuack for VS Code*\ #text(size: 13pt)[`github.com/Qaaxaap/tuack-vscode`]],
+          )],
+        )
+
+        #v(8pt)
+
+        #set text(size: 16pt)
+
+        #align(center)[#text(size: 22pt, weight: "bold")[开源 & 许可证]]
+
+        本幻灯片的演讲文本（包括图片）以 CC BY-SA 4.0 授权；\
+        代码（包括内联在 Typst 源文件的）以 MIT 授权。
+
+      ],
+    )
+  ])
+})
