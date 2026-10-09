@@ -258,7 +258,7 @@ Tuack-NG 的 Markdown 导出目标还可以针对目标进行调整，比如标�
 
 #v(-12pt)
 
-#import "assets/Tuack-NG能做什么/题面-渲染/render-targets.typ": MD-CODE, MD-LH, md-head, md-plain, md-loj, md-uoj
+#import "assets/Tuack-NG能做什么/题面-渲染/render-targets.typ": MD-CODE, MD-LH, md-head, md-loj, md-plain, md-uoj
 
 #grid(
   columns: (1.2fr, 2.72fr, 2.5fr),
@@ -454,7 +454,7 @@ Tuack-NG 帮你导出到评测平台。
 
 Tuack-NG 不是一句#ruby[呼 #strike[Rust] 护 _Tuack-NG_][「Expecto _Tuack-NGum_!」]召唤出来的。
 
-#figure(caption: [没错，这是 Gemini 生成的], numbering: none)[
+#figure(caption: [这张图是 Gemini 生成的], numbering: none)[
   #image("assets/开发细节/hp.png", height: 60%)
 ]
 
@@ -462,7 +462,7 @@ Tuack-NG 不是一句#ruby[呼 #strike[Rust] 护 _Tuack-NG_][「Expecto _Tuack-N
 
 == 题面 - 一切皆 AST
 
-什么是 AST？#strike[能吃吗？]
+什么是 AST？#uncover("1")[#strike[能吃吗？]]
 
 #pause
 
@@ -476,7 +476,7 @@ AST，即*抽象语法树*，是对题面（即 Markdown）的一种结构化表
 
 ---
 
-#import "assets/开发细节/题面-一切皆AST/ast-compare.typ": m-md, m-ast
+#import "assets/开发细节/题面-一切皆AST/ast-compare.typ": m-ast, m-md
 
 #grid(
   columns: (1fr, 1.35fr),
@@ -499,6 +499,35 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
 
 #v(6pt)
 #include "assets/开发细节/题面-一切皆AST/ast-pipeline.typ"
+
+== 前后端分离
+
+前端只负责内容，后端只负责长什么样。两边靠一份不可变的文档交接。
+
+#v(2pt)
+#include("assets/开发细节/前后端分离/separation.typ")
+
+#v(2pt)
+三条纪律都写在类型里：*不可变、可序列化*（所以跨得过 WASM 边界）；资源经 `AssetProvider` 注入（后端不碰文件系统）；后端*不写最终输出目录*（宿主统一落盘）。
+
+---
+
+交接的那份文档长这样。注意 `Problem` 里那一项：题面在交出去之前，已经是解析好的树，不是文本。
+
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 16pt,
+  align: top,
+  [
+    #code(raw(read("assets/开发细节/前后端分离/document.rs"), lang: "rust", block: true), size: 11.5pt)
+  ],
+  [
+    #code(raw(read("assets/开发细节/前后端分离/traits.rs"), lang: "rust", block: true), size: 11.5pt)
+    #v(6pt)
+    渲染与导出同构，插件实现的就是这两个 trait——所以两侧都能换。
+  ],
+)
+
 
 == 未细调
 
@@ -551,30 +580,6 @@ Tuack-NG 对题面的处理与转换，主要通过操作 AST 完成。
   ],
   [
     #code(raw(read("assets/开发细节/架构/renderer-trait.rs"), lang: "rust", block: true), size: 12pt)
-  ],
-)
-
-== 前后端分离
-
-题面源和输出目标分开，导出是同一套路。前端只管写出内容，后端决定它长什么样。
-
-#grid(
-  columns: (1fr, 1fr),
-  column-gutter: 20pt,
-  align: top,
-  [
-    #text(size: 15pt, weight: "bold")[题面]
-    #v(4pt)
-    #code(raw(read("assets/开发细节/前后端分离/rendering-flow.txt"), lang: "txt", block: true), size: 12pt)
-    #v(6pt)
-    换目标不用动题面。前面那页三种渲染结果就是从同一份源出来的，因为中间那棵 AST 是共用的。
-  ],
-  [
-    #text(size: 15pt, weight: "bold")[导出]
-    #v(4pt)
-    #code(raw(read("assets/开发细节/前后端分离/assemble-flow.txt"), lang: "txt", block: true), size: 12pt)
-    #v(6pt)
-    打印器、导出器都是可插拔的后端，插件挂的就是这里；一个后端出问题，不影响别的目标。
   ],
 )
 
