@@ -5,11 +5,16 @@
 
 ## 构建
 
+本幻灯片基于 Typix 构建，需使用 Nix：
+
 ```bash
-typst compile main.typ
+nix run .#build   # 编译并把 main.pdf 拷到当前目录
+nix run .#watch   # 改动源文件即重新编译
+nix build         # 只构建，产物是 result（一个 PDF 文件）
+nix develop       # 进带 typst 与字体的 shell
 ```
 
-排版草稿与编译产物（`preview/`、`main.pdf`）已在 `.gitignore` 中忽略。
+在没有 Nix 的条件下，使用 `typst {compile,watch}` 也许可行，但作者不保证这样做的兼容性。
 
 ## 目录
 
@@ -25,7 +30,9 @@ typst compile main.typ
 
 Typst 包，首次编译会自动下载：`xwysyy:0.4.0`、`cuti:0.4.0`、`fletcher:0.5.8`、`cetz:0.5.2`。
 
-字体需自行安装：正文 `LXGW WenKai`、代码 `Maple Mono Normal NL NF`、末页标题 `Noto Serif`。
+字体需自行安装：正文 `LXGW WenKai GB`（霞鹜文楷 GB，没装时回退到 `LXGW WenKai`）、代码 `Maple Mono Normal NL NF`、末页标题 `Noto Serif`。
+
+使用 Typix 构建时，以上依赖会被自动拉取，无须安装。
 
 ## 许可
 

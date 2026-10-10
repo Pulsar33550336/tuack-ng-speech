@@ -7,8 +7,8 @@
 
 #show: xwysyy-pre.with(
   theme: "sky",
-  font: "LXGW WenKai",
-  heading-font: "LXGW WenKai",
+  font: ("LXGW WenKai GB", "LXGW WenKai"),
+  heading-font: ("LXGW WenKai GB", "LXGW WenKai"),
   code-font: "Maple Mono Normal NL NF",
   lang: "zh",
   config-info(

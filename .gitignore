@@ -1,6 +1,10 @@
 # Typst 编译产物（由 main.typ 生成）
 /main.pdf
 
+# Nix 构建结果的符号链接
+/result
+/result-*
+
 # 排版草稿（过程中的 typ / png）
 /preview/
 
