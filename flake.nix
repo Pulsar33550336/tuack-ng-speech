@@ -86,6 +86,11 @@
             hash = "sha256-G7Z+7o6SQjRa63DCLXcSNAtzohrk4Kljk4pSb4rJfeU=";
           }
           {
+            name = "tiaoma";
+            version = "0.3.0";
+            hash = "sha256-WkbmsZaVbLUgoToI966vR+92DF0KMBMUMKilegpJvWA=";
+          }
+          {
             name = "uniwarn";
             version = "0.1.1";
             hash = "sha256-alpI7IgUJfjxDy6KXlPGX2N9KMEHPms/pbxXHRJrmZw=";

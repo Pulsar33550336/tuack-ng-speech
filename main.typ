@@ -1,6 +1,7 @@
 #import "@preview/xwysyy:0.4.0": *
 #import "@preview/cuti:0.4.0": show-fakebold
 #import "@preview/fletcher:0.5.8": diagram, edge, node
+#import "@preview/tiaoma:0.3.0": qrcode
 #show: show-fakebold
 
 #import "assets/icon.typ": tuack-icon
@@ -794,14 +795,14 @@ Tuack-NG 做了前后端分离。\
   [
     #align(center)[
       #figure(caption: "https://github.com/tuackng/Tuack-GUI", numbering: none)[
-        #image("assets/致谢-查看更多/qr-gui.png", height: 40%)
+        #qrcode("https://github.com/tuackng/Tuack-GUI", height: 40%)
       ]
     ]
   ],
   [
     #align(center)[
       #figure(caption: "https://github.com/Qaaxaap/tuack-vscode", numbering: none)[
-        #image("assets/致谢-查看更多/qr-vscode.png", height: 40%)
+        #qrcode("https://github.com/Qaaxaap/tuack-vscode", height: 40%)
       ]
     ]
   ],
@@ -960,10 +961,10 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
             column-gutter: 12pt,
             row-gutter: 8pt,
             align: horizon,
-            [#image("assets/致谢-查看更多/qr-tuack-ng.png", height: 44pt)],
+            [#qrcode("https://github.com/tuackng/tuack-ng", height: 44pt)],
             [*项目仓库*\ #text(size: 13pt)[`github.com/tuackng/tuack-ng`]],
 
-            [#image("assets/致谢-查看更多/qr-gui.png", height: 44pt)],
+            [#qrcode("https://github.com/tuackng/Tuack-GUI", height: 44pt)],
             [*Tuack-GUI*\ #text(size: 13pt)[`github.com/tuackng/Tuack-GUI`]],
           )],
           [#grid(
@@ -971,10 +972,10 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
             column-gutter: 12pt,
             row-gutter: 8pt,
             align: horizon,
-            [#image("assets/致谢-查看更多/qr-home.png", height: 44pt)],
+            [#qrcode("https://tuack-ng.ink", height: 44pt)],
             [*官网（文档）*\ #text(size: 13pt)[`tuack-ng.ink`]],
 
-            [#image("assets/致谢-查看更多/qr-vscode.png", height: 44pt)],
+            [#qrcode("https://github.com/Qaaxaap/tuack-vscode", height: 44pt)],
             [*Tuack for VS Code*\ #text(size: 13pt)[`github.com/Qaaxaap/tuack-vscode`]],
           )],
         )
@@ -994,7 +995,7 @@ Extism 是通用的跨语言插件 SDK，它只能管到*函数*：声明导出�
           columns: (auto, 1fr),
           column-gutter: 10pt,
           align: horizon,
-          [#image("assets/致谢-查看更多/qr-speech.png", height: 44pt)],
+          [#qrcode("https://github.com/Pulsar33550336/tuack-ng-speech", height: 44pt)],
           [*幻灯片源码仓库*\ #text(size: 13pt)[`github.com/Pulsar33550336/tuack-ng-speech`]],
         )
 

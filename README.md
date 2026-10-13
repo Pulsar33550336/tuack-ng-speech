@@ -28,7 +28,7 @@ nix develop       # 进带 typst 与字体的 shell
 
 ## 依赖
 
-Typst 包，首次编译会自动下载：`xwysyy:0.4.0`、`cuti:0.4.0`、`fletcher:0.5.8`、`cetz:0.5.2`。
+Typst 包，首次编译会自动下载：`xwysyy:0.4.0`、`cuti:0.4.0`、`fletcher:0.5.8`、`cetz:0.5.2`、`tiaoma:0.3.0`（末页与「实际成果」页的二维码，编译期用它的 wasm 插件生成，仓库里不再放 PNG）。
 
 字体需自行安装：正文 `LXGW WenKai GB`（霞鹜文楷 GB，没装时回退到 `LXGW WenKai`）、代码 `Maple Mono Normal NL NF`、末页标题 `Noto Serif`。
 
