@@ -31,69 +31,69 @@
         # Typst 包不走网络，全部由 typix 从官方 CDN 取；传递依赖也要逐个列出。
         unstable_typstPackages = [
           {
-            name = "xwysyy";
-            version = "0.4.0";
-            hash = "sha256-eGkXxdNTdEjB3Irc/jQA6J3FtXPK00pUVNf9B42A6IM=";
-          }
-          {
-            name = "touying";
-            version = "0.7.4";
-            hash = "sha256-erhUBaYydTP1MKxwIGchAy42TJypAPq8MklSrgwLUos=";
-          }
-          {
-            name = "cuti";
-            version = "0.4.0";
-            hash = "sha256-r/i8nkSoNT0qSGyDO0FUDB1DxRigsTg+31nro+eEHY4=";
-          }
-          {
-            name = "fletcher";
-            version = "0.5.8";
-            hash = "sha256-phiDpK9MqSOjfFl5AOZ09A2tP3vePyo9j+gELmyopms=";
+            name = "cetz";
+            version = "0.3.4";
+            hash = "sha256-5w3UYRUSdi4hCvAjrp9HslzrUw7BhgDdeCiDRHGvqd4=";
           }
           {
             name = "cetz";
             version = "0.5.2";
-            hash = "sha256-d8+EkBFK4ExuZloR76aR0oSgytuXGXcbVwjBGXKS8j8=";
+            hash = "sha256-wttZ+L+VPlTLGKPN/exYXozRjMNdXLShhYVTQt4KV/E=";
           }
           {
-            name = "cetz";
-            version = "0.3.4";
-            hash = "sha256-T0tajTEdUZ50mUCnZv5QUh5AwEESnhyRrwxC5h8wdRQ=";
+            name = "cuti";
+            version = "0.4.0";
+            hash = "sha256-erKkNXoH/x5WAMTg/bAB1I2AcUd4QCbtBvmHx/zk/Nc=";
           }
           {
-            name = "oxifmt";
-            version = "1.0.0";
-            hash = "sha256-fReh/IrQF0DsPLKwPHNgpCJf+TGOVxB2X6mOpv1ZWU8=";
-          }
-          {
-            name = "oxifmt";
-            version = "0.2.1";
-            hash = "sha256-FvrCkjAyxZcn3gHoTULKxF6HkNoo31bv/KSfTeQbCdk=";
+            name = "fletcher";
+            version = "0.5.8";
+            hash = "sha256-kKVp5WN/EbHEz2GCTkr8i8DRiAdqlr4R7EW6drElgWk=";
           }
           {
             name = "octique";
             version = "0.1.1";
-            hash = "sha256-sCgJE7PFrEUBhf7Z4rtz9AZC15/CZ/22oycZDVYy+g8=";
+            hash = "sha256-Ctpic3vNfrFfonejoS0zpSsKK+rvgGZ0geuMHPF+w30=";
+          }
+          {
+            name = "oxifmt";
+            version = "0.2.1";
+            hash = "sha256-8PNPa9TGFybMZ1uuJwb5ET0WGIInmIgg8h24BmdfxlU=";
+          }
+          {
+            name = "oxifmt";
+            version = "1.0.0";
+            hash = "sha256-edTDK5F2xFYWypGpR0dWxwM7IiBd8hKGQ0KArkbpHvI=";
           }
           {
             name = "physica";
             version = "0.9.8";
-            hash = "sha256-nM5QQe+hMRu0jxIGmOHTN3i2TjOy9jHcJxR1DrEgWKI=";
+            hash = "sha256-BGXl33ALR79xQ20JkGclKPrG0nGC+jrxMxHrfv9R9JE=";
           }
           {
             name = "showybox";
             version = "2.0.4";
-            hash = "sha256-LUFeOK2FFDuwynpB9Hzcu/MYagAqnGN849987XElhY8=";
+            hash = "sha256-bxSXdFHHnb/4X26RFwcVaU6VI9VP5BCKCxwt0qBCI80=";
           }
           {
             name = "theorion";
             version = "0.6.0";
-            hash = "sha256-stpDxQn2776YGn9bYdXZJUwCDppREa46UzuYghC486s=";
+            hash = "sha256-w7dcuS5WcsJD7ekTIqHwEkKBtemVdzrl9SMTHZgBitA=";
+          }
+          {
+            name = "touying";
+            version = "0.7.4";
+            hash = "sha256-G7Z+7o6SQjRa63DCLXcSNAtzohrk4Kljk4pSb4rJfeU=";
           }
           {
             name = "uniwarn";
             version = "0.1.1";
-            hash = "sha256-aCR0MtqxsWXBYFVBHA8OwVSmPX/PXvD2WQYmlpXTaOo=";
+            hash = "sha256-alpI7IgUJfjxDy6KXlPGX2N9KMEHPms/pbxXHRJrmZw=";
+          }
+          {
+            name = "xwysyy";
+            version = "0.4.0";
+            hash = "sha256-AocBxPB7iPQ/B0ro86zyuLZRxvAYKlvE8MLpMwNLH3c=";
           }
         ];
 
