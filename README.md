@@ -3,6 +3,10 @@
 一份介绍 [Tuack-NG](https://github.com/tuackng/tuack-ng) 的讲稿——它能做什么，以及为什么这样设计。
 用 [Typst](https://typst.app/) 与 [Touying](https://touying-typ.github.io/) 写成。
 
+> [!caution]
+>
+> 因为演讲已经完成，本仓库的生命周期已经结束，将会保持只读且不再更新。
+
 ## 构建
 
 本幻灯片基于 Typix 构建，需使用 Nix：
